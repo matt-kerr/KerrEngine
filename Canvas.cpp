@@ -1,0 +1,72 @@
+// Matthew Kerr
+
+#include <fstream>
+#include <string>
+#include "Canvas.h"
+#include "Color.h"
+using namespace std;
+
+Canvas::Canvas(const int& width, const int& height)
+{
+	this->width = width;
+	this->height = height;
+	data = new Color*[height];
+	for (int i = 0; i < height; i++)
+	{
+		data[i] = new Color[width];
+	}
+
+}
+
+Canvas::~Canvas()
+{
+	for (int i = 0; i < this->height; i++)
+	{
+		delete [] data[i];
+	}
+	delete [] data;
+}
+
+void Canvas::writePixel(const int& x, const int& y, const Color& c)
+{
+	this->data[y][x].red = c.red;
+	this->data[y][x].green = c.green;
+	this->data[y][x].blue = c.blue;
+}
+
+Color Canvas::pixelAt(const int& x, const int& y)
+{
+	return this->data[x][y];
+}
+
+void Canvas::saveImage(ofstream& fout, const int& scalar)
+{
+	int count = 0;
+	fout << "P3" << endl;
+	fout << this->width << " " << this->height << endl;
+	fout << 255 << endl;
+	for (int i = 0; i < this->height; i++)
+	{
+		for (int j = 0; j < this->width; j++)
+		{
+			fout << std::round(max(0.0, (min(1.0, this->data[i][j].red) * scalar))) << " "
+				 << std::round(max(0.0, (min(1.0, this->data[i][j].green) * scalar))) << " "
+				 << std::round(max(0.0, (min(1.0, this->data[i][j].blue) * scalar)));
+			count++;
+			if (j < this->width - 1)
+			{
+				if (count < 6)
+				{
+					fout << " ";
+				}
+				else
+				{
+					fout << endl;
+					count = 1;
+				}
+			}
+		}
+		fout << endl;
+		count = 1;
+	}
+}

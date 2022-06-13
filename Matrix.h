@@ -3,6 +3,8 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 #define EPSILON 0.0001
+#define VECTOR 0
+#define POINT 1
 
 #include <iostream>
 #include <numbers>
@@ -40,19 +42,22 @@ class Matrix
 
 		// matrix functions
 		void printPiValues();
+		static Matrix createVector(const double& x, const double& y, const double& z);
 		void vector(const double& x, const double& y, const double& z);
+		static Matrix createPoint(const double& x, const double& y, const double& z);
 		void point(const double& x, const double& y, const double& z);
 		void resize(const int& rows, const int& cols);
 		void identity(const int& size);
-		void transpose();
+		Matrix transpose();
 		const double dotProductMatrix(const Matrix& rhs, const int& row, const int& col) const;
 		const double dotProductVector(const Matrix& rhs) const;
+		Matrix crossProductVector(const Matrix& rhs);
 		double determinant();
 		double minor(const int& elim_row, const int& elim_col);
 		double cofactor(const int& elim_row, const int& elim_col);
-		void becomeSubmatrix(const Matrix& orig, const int& row_elim, const int& col_elim);
+		Matrix getSubmatrix(const int& row_elim, const int& col_elim);
 		bool isInvertible();
-		void inverse();
+		Matrix inverse();
 		void translation(const double& x, const double& y, const double& z);
 		void scaling(const double& x, const double& y, const double& z);
 		void rotation_x(const double& r);
@@ -61,6 +66,7 @@ class Matrix
 		void shearing(const double& x_y, const double& x_z, const double& y_x, const double& y_z, const double& z_x, const double& z_y);
 		Matrix normalize(); // vector mode only
 		double magnitude();
+		Matrix reflect(const Matrix& normal); // vector mode only
 };
 
 #endif

@@ -161,11 +161,13 @@ Matrix Matrix::operator+(const Matrix& rhs) const
 		throw KerrEngineException(EXCEPTION_MATRIX_ADDITION_NOT_SAME_SIZES);
 	}
 	Matrix result(this->rows, this->cols);
+	double temp;
 	for (int i = 0; i < this->rows; i++)
 	{
 		for (int j = 0; j < this->cols; j++)
 		{
-			result(i, j) = (*this)(i, j) + rhs(i, j);
+			temp = (*this)(i, j) + rhs(i, j);
+			result(i, j) = abs(temp) < EPSILON ? 0.0 : temp;
 		}
 	}
 	return result;
@@ -179,11 +181,13 @@ Matrix Matrix::operator-(const Matrix& rhs) const
 		throw KerrEngineException(EXCEPTION_MATRIX_ADDITION_NOT_SAME_SIZES);
 	}
 	Matrix result(this->rows, this->cols);
+	double temp;
 	for (int i = 0; i < this->rows; i++)
 	{
 		for (int j = 0; j < this->cols; j++)
 		{
-			result(i, j) = (*this)(i, j) - rhs(i, j);
+			temp = (*this)(i, j) - rhs(i, j);
+			result(i, j) = abs(temp) < EPSILON ? 0.0 : temp;
 		}
 	}
 	return result;
@@ -214,11 +218,13 @@ Matrix Matrix::operator*(const Matrix& rhs) const
 Matrix Matrix::operator*(const double& rhs) const
 {
 	Matrix result(this->rows, this->cols);
+	double temp;
 	for (int i = 0; i < this->rows; i++)
 	{
 		for (int j = 0; j < this->cols; j++)
 		{
-			result(i, j) = (*this)(i, j) * rhs;
+			temp = (*this)(i, j) * rhs;
+			result(i, j) = abs(temp) < EPSILON ? 0.0 : temp;
 		}
 	}
 	return result;
@@ -228,11 +234,13 @@ Matrix Matrix::operator*(const double& rhs) const
 Matrix Matrix::operator/(const double& rhs) const
 {
 	Matrix result(this->rows, this->cols);
+	double temp;
 	for (int i = 0; i < this->rows; i++)
 	{
 		for (int j = 0; j < this->cols; j++)
 		{
-			result(i, j) = (*this)(i, j) / rhs;
+			temp = (*this)(i, j) / rhs;
+			result(i, j) = abs(temp) < EPSILON ? 0.0 : temp; 
 		}
 	}
 	return result;
@@ -246,6 +254,17 @@ void Matrix::printPiValues()
 	cout << "----------" << endl;
 }
 
+Matrix Matrix::createVector(const double& x, const double& y, const double& z)
+{
+	Matrix ret(4, 1);
+	ret(0, 0) = x;
+	ret(1, 0) = y;
+	ret(2, 0) = z;
+	ret(3, 0) = 0.0;
+	return ret;
+}
+
+
 void Matrix::vector(const double& x, const double& y, const double& z)
 {
 	this->resize(4, 1);
@@ -253,6 +272,16 @@ void Matrix::vector(const double& x, const double& y, const double& z)
 	(*this)(1, 0) = y;
 	(*this)(2, 0) = z;
 	(*this)(3, 0) = 0.0;
+}
+
+Matrix Matrix::createPoint(const double& x, const double& y, const double& z)
+{
+	Matrix ret(4, 1);
+	ret(0, 0) = x;
+	ret(1, 0) = y;
+	ret(2, 0) = z;
+	ret(3, 0) = 1.0;
+	return ret;
 }
 
 void Matrix::point(const double& x, const double& y, const double& z)
@@ -301,16 +330,17 @@ void Matrix::identity(const int& size)
 	}
 }
 
-void Matrix::transpose()
+Matrix Matrix::transpose()
 {
-	Matrix temp(*this);
+	Matrix ret(*this);
 	for (int i = 0; i < this->rows; i++)
 	{
 		for (int j = 0; j < this->cols; j++)
 		{
-			(*this)(i, j) = temp(j, i);
+			ret(i, j) = (*this)(j, i);
 		}
 	}
+	return ret;
 }
 
 const double Matrix::dotProductMatrix(const Matrix& rhs, const int& row, const int& col) const
@@ -331,12 +361,30 @@ const double Matrix::dotProductMatrix(const Matrix& rhs, const int& row, const i
 const double Matrix::dotProductVector(const Matrix& rhs) const
 {
 	// Number of columns of first matrix must equal number of rows of the second matrix
-	if (this->cols != 1 || this->rows != 4 || rhs.cols != 1 || rhs.rows != 4)
+	if (this->cols != 1 || this->rows != 4 || rhs.cols != 1 || rhs.rows != 4 || (*this)(3, 0) != 0 || rhs(3, 0) != 0)
 	{
 		throw KerrEngineException(EXCEPTION_VECTOR_MULTIPLICATION_INVALID_MATRIX_SIZES);
 	}
 	
-	return ((*this)(0, 0) * rhs(0, 0)) + ((*this)(1, 0) * rhs(1, 0)) + ((*this)(2, 0) * rhs(2, 0));
+	return (
+		((*this)(0, 0) * rhs(0, 0))
+		+ ((*this)(1, 0) * rhs(1, 0))
+		+ ((*this)(2, 0) * rhs(2, 0)));
+}
+
+Matrix Matrix::crossProductVector(const Matrix& rhs)
+{
+	// Check that both are vectors
+	if (this->cols != 1 || this->rows != 4 || rhs.cols != 1 || rhs.rows != 4 || (*this)(3, 0) != 1 || rhs(3, 0) != 1)
+	{
+		throw KerrEngineException(EXCEPTION_DOT_PRODUCT_NOT_VECTORS);
+	}
+	Matrix result;
+	result.vector(
+		((*this)(1, 0) * rhs(2, 0)) - ((*this)(2, 0) * rhs(1, 0))
+		, ((*this)(2, 0) * rhs(0, 0)) - ((*this)(0, 0) * rhs(2, 0))
+		, ((*this)(0, 0) * rhs(1, 0)) - ((*this)(1, 0) * rhs(0, 0)));
+	return result;
 }
 
 double Matrix::determinant()
@@ -366,8 +414,7 @@ double Matrix::minor(const int& elim_row, const int& elim_col)
 	{
 		throw KerrEngineException(EXCEPTION_MATRIX_MINOR_INVALID_MATRIX_SIZE);
 	}
-	Matrix temp;
-	temp.becomeSubmatrix(*this, elim_row, elim_col);
+	Matrix temp = this->getSubmatrix(elim_row, elim_col);
 	return temp.determinant();
 }
 
@@ -378,24 +425,23 @@ double Matrix::cofactor(const int& elim_row, const int& elim_col)
 		throw KerrEngineException(EXCEPTION_MATRIX_MINOR_INVALID_MATRIX_SIZE);
 	}
 	int cofactor_sign = ((elim_row + elim_col) % 2 == 0) ? 1 : -1;
-	Matrix temp;
-	temp.becomeSubmatrix(*this, elim_row, elim_col);
+	Matrix temp = this->getSubmatrix(elim_row, elim_col);
 	return cofactor_sign * temp.determinant();
 }
 
-void Matrix::becomeSubmatrix(const Matrix& orig, const int& row_elim, const int& col_elim)
+Matrix Matrix::getSubmatrix(const int& row_elim, const int& col_elim)
 {
-	if ((orig.rows != orig.cols) || (orig.rows < 3) || (orig.rows > 4))
+	if ((this->rows != this->cols) || (this->rows < 3) || (this->rows > 4))
 	{
 		throw KerrEngineException(EXCEPTION_SUBMATRIX_INVALID_SIZE);
 	}
-	this->resize(orig.rows - 1, orig.cols - 1);
+	Matrix ret(this->rows - 1, this->cols - 1);
 	int offset_i = 0;
 	int offset_j = 0;
 	bool col_elim_happened = false;
-	for (int i = 0; i < orig.rows; i++)
+	for (int i = 0; i < this->rows; i++)
 	{
-		for (int j = 0; j < orig.cols; j++)
+		for (int j = 0; j < this->cols; j++)
 		{
 			if (i == row_elim)
 			{
@@ -409,11 +455,12 @@ void Matrix::becomeSubmatrix(const Matrix& orig, const int& row_elim, const int&
 			}
 			else
 			{
-				(*this)((i + offset_i),(j + offset_j)) = orig(i ,j);
+				ret((i + offset_i),(j + offset_j)) = (*this)(i ,j);
 			}
 		}
 		offset_j = 0;
 	}
+	return ret;
 }
 
 bool Matrix::isInvertible()
@@ -421,20 +468,20 @@ bool Matrix::isInvertible()
 	return this->determinant() != 0;
 }
 
-void Matrix::inverse()
+Matrix Matrix::inverse()
 {
 	if (!this->isInvertible()) { throw KerrEngineException(EXCEPTION_MATRIX_NOT_INVERTIBLE); }
-	
-	Matrix temp(*this);
+	Matrix ret(this->rows, this->cols);
 	double det = this->determinant();
 
 	for (int i = 0; i < this->rows; i++)
 	{
 		for (int j = 0; j < this->cols; j++)
 		{
-			(*this)(j, i) = temp.cofactor(i, j) / det;
+			ret(j, i) = this->cofactor(i, j) / det;
 		}
 	}
+	return ret;
 }
 
 void Matrix::translation(const double& x, const double& y, const double& z)
@@ -491,19 +538,27 @@ void Matrix::shearing(const double& x_y, const double& x_z, const double& y_x, c
 	(*this)(2, 1) = z_y;
 }
 
+// vector mode only
 Matrix Matrix::normalize()
 {
 	if (this->rows != 4 || this->cols != 1 || (*this)(3, 0) != 0) { throw KerrEngineException(EXCEPTION_ATTEMPTED_NORMALIZE_NON_VECTOR); }
 	Matrix result;
 	double magnitude;
 	magnitude = this->magnitude();
-	result.point(((*this)(0, 0) / magnitude), ((*this)(1, 0) / magnitude), ((*this)(2, 0) / magnitude));
+	result.vector(((*this)(0, 0) / magnitude), ((*this)(1, 0) / magnitude), ((*this)(2, 0) / magnitude));
 	return result;
 }
 
-// Calculates the length of a vector.
+// calculates the length of a vector
 double Matrix::magnitude()
 {
 	if (this->rows != 4 || this->cols != 1 || (*this)(3, 0) != 0) { throw KerrEngineException(EXCEPTION_ATTEMPTED_MAGNITUDE_NON_VECTOR); }
 	return sqrt(pow((*this)(0, 0), 2) + pow((*this)(1, 0), 2) + pow((*this)(2, 0), 2));
+}
+
+// vector mode only
+Matrix Matrix::reflect(const Matrix& normal)
+{
+	if (this->rows != 4 || this->cols != 1 || (*this)(3, 0) != 0) { throw KerrEngineException(EXCEPTION_ATTEMPTED_REFLECT_NON_VECTOR); }
+	return (*this) - normal * 2 * this->dotProductVector(normal);
 }

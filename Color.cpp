@@ -60,7 +60,7 @@ Color Color::operator*(const Color& c2) const
 	return result;
 }
 
-Color Color::operator*(const int& scalar) const
+Color Color::operator*(const double& scalar) const
 {
 	Color c1 = *this;
 	Color result((c1.red * scalar), (c1.green * scalar), (c1.blue * scalar));

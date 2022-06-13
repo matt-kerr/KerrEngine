@@ -21,7 +21,7 @@ class Color
 		Color operator+(const Color& c2) const;
 		Color operator-(const Color& c2) const;
 		Color operator*(const Color& c2) const;
-		Color operator*(const int& scalar) const;
+		Color operator*(const double& scalar) const;
 		static Color create(const double& red, const double& green, const double& blue);
 };
 

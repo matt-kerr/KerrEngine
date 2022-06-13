@@ -26,7 +26,7 @@ Matrix Ray::position(const double& t)
 
 Intersection* Ray::intersectSphere(Sphere *s)
 {
-	Matrix s_transform_inverse = (*s).transformation;
+	Matrix s_transform_inverse = (*s).transform;
 	s_transform_inverse.inverse();
 	Ray ray2 = this->transform(s_transform_inverse);
 	Intersection* ret = new Intersection[2];
@@ -52,10 +52,10 @@ Intersection* Ray::intersectSphere(Sphere *s)
 	else
 	{
 		ret[0].t = ((b * -1.0) - sqrt(discriminant)) / (2 * a);
-		ret[0].obj = NULL;
+		ret[0].obj = s;
 		ret[0].obj_type = "SPHERE";
 		ret[1].t = ((b * -1.0) + sqrt(discriminant)) / (2 * a);
-		ret[1].obj = NULL;
+		ret[1].obj = s;
 		ret[1].obj_type = "SPHERE";
 	}
 

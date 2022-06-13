@@ -141,28 +141,26 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Color.cpp" />
-    <ClCompile Include="Environment.cpp" />
     <ClCompile Include="Canvas.cpp" />
-    <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="Intersection.cpp" />
     <ClCompile Include="KerrEngine.cpp" />
     <ClCompile Include="KerrEngineException.cpp" />
     <ClCompile Include="KerrTester.cpp" />
+    <ClCompile Include="Material.cpp" />
     <ClCompile Include="Matrix.cpp" />
-    <ClCompile Include="Projectile.cpp" />
+    <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="Ray.cpp" />
     <ClCompile Include="Sphere.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.h" />
-    <ClInclude Include="Environment.h" />
     <ClInclude Include="Canvas.h" />
-    <ClInclude Include="Geometry.h" />
     <ClInclude Include="Intersection.h" />
     <ClInclude Include="KerrEngine.h" />
     <ClInclude Include="KerrEngineException.h" />
+    <ClInclude Include="Material.h" />
     <ClInclude Include="Matrix.h" />
-    <ClInclude Include="Projectile.h" />
+    <ClInclude Include="PointLight.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="Sphere.h" />
   </ItemGroup>

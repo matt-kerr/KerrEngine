@@ -7,64 +7,85 @@ using namespace std;
 
 istream& operator>>(istream& in, Color& c)
 {
-	throw KerrEngineException(EXCEPTION_NO_COLOR_INPUT_REDIRECT);
+	throw KerrEngineException("EXCEPTION_NO_COLOR_INPUT_REDIRECT");
 	return in;
 }
 ostream& operator<<(ostream& out, const Color& c)
 {
-	cout << "(" << std::to_string(c.red) << ", " + std::to_string(c.green) << ", " << std::to_string(c.blue) << ")";
+	cout << "color(" << std::to_string(c.r) << ", " + std::to_string(c.g) << ", " << std::to_string(c.b) << ")";
 	return out;
 }
 
 Color::Color()
 {
-	this->red = 0.0;
-	this->green = 0.0;
-	this->blue = 0.0;
+	this->r = 0.0;
+	this->g = 0.0;
+	this->b = 0.0;
 }
-Color::Color(const double& red, const double& green, const double& blue)
+Color::Color(const double& r, const double& g, const double& b)
 {
-	this->red = red;
-	this->green = green;
-	this->blue = blue;
+	this->r = r;
+	this->g = g;
+	this->b = b;
 }
 
 Color::~Color() {}
 
+// copy constructor
+Color::Color(Color& orig)
+{
+	this->r = orig.r;
+	this->g = orig.g;
+	this->b = orig.b;
+}
+
+// move constructor
+Color::Color(Color&& orig) noexcept
+{
+	this->r = orig.r;
+	this->g = orig.g;
+	this->b = orig.b;
+}
+
 Color& Color::operator=(const Color& c2)
 {
-	this->red = c2.red;
-	this->green = c2.green;
-	this->blue = c2.blue;
+	this->r = c2.r;
+	this->g = c2.g;
+	this->b = c2.b;
 	return *this;
+}
+
+Color& Color::operator=(Color&& orig)
+{
+	this->r = orig.r;
+	this->g = orig.g;
+	this->b = orig.b;
+	return *this;
+}
+
+bool Color::operator==(const Color& rhs)
+{
+	return ((this->r == rhs.r) && (this->g == rhs.g) && (this->b == rhs.b));
 }
 
 Color Color::operator+(const Color& c2) const
 {
-	Color c1 = *this;
-	Color result((c1.red + c2.red), (c1.green + c2.green), (c1.blue + c2.blue));
-	return result;
+	return Color::create((this->r + c2.r), (this->g + c2.g), (this->b + c2.b));
 }
 
 Color Color::operator-(const Color& c2) const
 {
-	Color c1 = *this;
-	Color result((c1.red - c2.red), (c1.green - c2.green), (c1.blue - c2.blue));
-	return result;
+	return Color::create((this->r - c2.r), (this->g - c2.g), (this->b - c2.b));
 }
 
 Color Color::operator*(const Color& c2) const
 {
-	Color c1 = *this;
-	Color result((c1.red * c2.red), (c1.green * c2.green), (c1.blue * c2.blue));
-	return result;
+	return Color::create((this->r * c2.r), (this->g * c2.g), (this->b * c2.b));
 }
 
 Color Color::operator*(const double& scalar) const
 {
-	Color c1 = *this;
-	Color result((c1.red * scalar), (c1.green * scalar), (c1.blue * scalar));
-	return result;
+	return Color::create((this->r * scalar), (this->g * scalar), (this->b * scalar));
 }
 
 Color Color::create(const double& red, const double& green, const double& blue)

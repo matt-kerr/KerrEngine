@@ -10,19 +10,23 @@ using namespace std;
 class Sphere
 {
 public:
-	double radii;
-	Matrix transform;
-	Material material;
+	Matrix transform = Matrix::identity(4);
+	Material material = Material();
 
 	// constructors
 	Sphere();
 	virtual ~Sphere();
-	Sphere(const double& radii);
-	Sphere(const double& radii, Matrix transform, Material material);
+
+	Sphere(const Sphere& orig); // copy constructor
+	Sphere(Sphere&& orig) noexcept; // move constructor
+
+	// operator overloads
+	Sphere& operator=(const Sphere& rhs); // = operator overload
+	Sphere& operator=(Sphere&& orig); // move = operator overload (move assignment overload)
+	bool operator==(const Sphere& rhs); // == operator overload
 
 	// sphere functions
-	void setTransforms(Matrix m);
-	Matrix normalAt(Matrix world_point); // returns a Vector, takes a Point
+	static Matrix normalAt(const Sphere& s, const Matrix& world_point); // returns a Vector, takes a Point
 };
 
 #endif

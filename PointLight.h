@@ -5,6 +5,7 @@
 
 #include "Color.h"
 #include "Matrix.h"
+using namespace std;
 
 class PointLight
 {

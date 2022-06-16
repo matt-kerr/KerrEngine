@@ -4,47 +4,57 @@
 #include "Matrix.h"
 #include "KerrEngineException.h"
 
-Sphere::Sphere()
-{
-	this->radii = 0.0;
-	Matrix temp;
-	temp.identity(4);
-	this->transform = temp;
-}
+Sphere::Sphere() { }
 
 Sphere::~Sphere() { }
 
-Sphere::Sphere(const double& radii)
+// copy constructor
+Sphere::Sphere(const Sphere& orig)
 {
-	this->radii = radii;
-	this->transform.identity(4);
+	this->transform = orig.transform;
+	this->material = orig.material;
 }
 
-Sphere::Sphere(const double& radii, Matrix transform, Material material)
+// move constructor
+Sphere::Sphere(Sphere&& orig) noexcept
 {
-	this->radii = radii;
-	this->transform = transform;
-	this->material = material;
+	this->transform = orig.transform;
+	this->material = orig.material;
 }
 
-void Sphere::setTransforms(Matrix m)
+// = operator overload
+Sphere& Sphere::operator=(const Sphere& rhs)
 {
-	this->transform = m;
+	this->transform = rhs.transform;
+	this->material = rhs.material;
+	return *this;
 }
 
-Matrix Sphere::normalAt(Matrix world_point)
+// move = operator overload (move assignment overload)
+Sphere& Sphere::operator=(Sphere&& orig)
 {
-	//cout << "entered Sphere::normalAt" << endl;
-	if (world_point.rows != 4 || world_point.cols != 1 || world_point(3, 0) != 1) { throw KerrEngineException(EXCEPTION_NORMAL_AT_SPHERE_INVALID_MATRIX_SIZE); }
-	Matrix center;
-	center.point(0.0, 0.0, 0.0);
-	//cout << "this->transform:" << endl << this->transform << endl << endl;
-	//cout << "this->transform.inverse():" << endl << this->transform.inverse() << endl << endl;
-	Matrix object_point = this->transform.inverse() * world_point;
-	Matrix object_normal = object_point - center;
-	Matrix world_normal = (this->transform.inverse()).transpose() * object_normal;
+	if (this != &orig)
+	{
+		this->transform = orig.transform;
+		this->material = orig.material;
+	}
+	return *this;
+}
+
+// == operator overload
+bool Sphere::operator==(const Sphere& rhs)
+{
+	return (this->material == rhs.material) && (this->transform == rhs.transform);
+}
+
+Matrix Sphere::normalAt(const Sphere& s, const Matrix& world_point)
+{
+	if (world_point.rows != 4 || world_point.cols != 1 || world_point(3, 0) != 1) { throw KerrEngineException("EXCEPTION_NORMAL_AT_SPHERE_INVALID_MATRIX_SIZE"); }
+	Matrix object_point = Matrix::inverse(s.transform) * world_point;
+	Matrix object_normal = object_point - Matrix::point(0.0, 0.0, 0.0);
+	Matrix world_normal = Matrix::transpose(Matrix::inverse(s.transform)) * object_normal;
 	world_normal(3, 0) = 0.0;
-	return world_normal.normalize();
+	return Matrix::normalize(world_normal);
 }
 
 /*

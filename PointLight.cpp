@@ -2,8 +2,13 @@
 
 #include "KerrEngineException.h"
 #include "PointLight.h"
+using namespace std;
 
-PointLight::PointLight() { throw KerrEngineException(EXCEPTION_POINTLIGHT_NEEDS_PARAMETERS); }
+PointLight::PointLight()
+{
+	this->intensity = Color::create(1.0, 1.0, 1.0);
+	this->position = Matrix::point(0.0, 0.0, 0.0);
+}
 
 PointLight::~PointLight() { }
 

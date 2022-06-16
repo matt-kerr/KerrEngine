@@ -151,6 +151,7 @@
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="Ray.cpp" />
     <ClCompile Include="Sphere.cpp" />
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.h" />
@@ -162,7 +163,15 @@
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="Ray.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Sphere.h" />
+    <ClInclude Include="World.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="KerrEngine.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="images\sphere_with_lighting.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

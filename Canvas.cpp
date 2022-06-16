@@ -29,9 +29,9 @@ Canvas::~Canvas()
 
 void Canvas::writePixel(const int& x, const int& y, const Color& c)
 {
-	this->data[y][x].red = c.red;
-	this->data[y][x].green = c.green;
-	this->data[y][x].blue = c.blue;
+	this->data[y][x].r = c.r;
+	this->data[y][x].g = c.g;
+	this->data[y][x].b = c.b;
 }
 
 Color Canvas::pixelAt(const int& x, const int& y)
@@ -49,9 +49,9 @@ void Canvas::saveImage(ofstream& fout, const int& scalar)
 	{
 		for (int j = 0; j < this->width; j++)
 		{
-			fout << std::round(max(0.0, (min(1.0, this->data[i][j].red) * scalar))) << " "
-				 << std::round(max(0.0, (min(1.0, this->data[i][j].green) * scalar))) << " "
-				 << std::round(max(0.0, (min(1.0, this->data[i][j].blue) * scalar)));
+			fout << std::round(max(0.0, (min(1.0, this->data[i][j].r) * scalar))) << " "
+				 << std::round(max(0.0, (min(1.0, this->data[i][j].g) * scalar))) << " "
+				 << std::round(max(0.0, (min(1.0, this->data[i][j].b) * scalar)));
 			count++;
 			if (j < this->width - 1)
 			{

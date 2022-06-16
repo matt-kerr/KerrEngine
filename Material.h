@@ -6,17 +6,27 @@
 #include "Color.h"
 #include "Matrix.h"
 #include "PointLight.h"
-
 class Material
 {
 	public:
 		Color color;
 		double ambient, diffuse, specular, shininess;
 
+		// constructors
 		Material();
 		virtual ~Material();
 		Material(Color color, const double& ambient, const double& diffuse, const double& specular, const double& shininess);
-		Color lighting(PointLight light, Matrix point, Matrix eyev, Matrix normalv);
+
+		Material(Material& orig); // copy constructor
+		Material(Material&& orig) noexcept; // move constructor
+
+		// operator overloads
+		Material& operator=(const Material& rhs); // = operator overload
+		Material& operator=(Material&& orig); // move = operator overload (move assignment overload)
+		bool operator==(const Material& rhs); // == operator overload
+
+
+		static Color lighting(const Material& material, const PointLight& light, const Matrix& point, const Matrix& eyev, const Matrix& normalv);
 };
 
 #endif

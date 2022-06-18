@@ -47,7 +47,7 @@ bool Sphere::operator==(const Sphere& rhs)
 	return (this->material == rhs.material) && (this->transform == rhs.transform);
 }
 
-Matrix Sphere::normalAt(const Sphere& s, const Matrix& world_point)
+Matrix Sphere::normalAt(Sphere s, const Matrix& world_point)
 {
 	if (world_point.rows != 4 || world_point.cols != 1 || world_point(3, 0) != 1) { throw KerrEngineException("EXCEPTION_NORMAL_AT_SPHERE_INVALID_MATRIX_SIZE"); }
 	Matrix object_point = Matrix::inverse(s.transform) * world_point;
@@ -56,16 +56,3 @@ Matrix Sphere::normalAt(const Sphere& s, const Matrix& world_point)
 	world_normal(3, 0) = 0.0;
 	return Matrix::normalize(world_normal);
 }
-
-/*
-Matrix Sphere::normalAt(Matrix p)
-{
-	if (p.rows != 4 || p.cols != 1 || p(3, 0) != 1) { throw KerrEngineException(EXCEPTION_NORMAL_AT_SPHERE_INVALID_MATRIX_SIZE); }
-	Matrix center, temp;
-	center.point(0.0, 0.0, 0.0);
-	temp = p - center;
-	//cout << temp << endl;
-	//cout << temp.normalize() << endl;
-	return temp.normalize();
-}
-*/

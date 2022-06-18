@@ -26,7 +26,7 @@ public:
 	bool operator==(const Sphere& rhs); // == operator overload
 
 	// sphere functions
-	static Matrix normalAt(const Sphere& s, const Matrix& world_point); // returns a Vector, takes a Point
+	static Matrix normalAt(Sphere s, const Matrix& world_point); // returns a Vector, takes a Point
 };
 
 #endif

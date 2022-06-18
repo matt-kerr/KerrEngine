@@ -97,7 +97,7 @@ Color Material::lighting(const Material& material, const PointLight& light, cons
 	else
 	{
 		cont_diffuse = effective_color * material.diffuse * light_dot_normal;
-		reflectv = Matrix::reflect((lightv * -1.0), normalv);
+		reflectv = Matrix::reflect(-lightv, normalv);
 		reflect_dot_eye = Matrix::dot(reflectv, eyev);
 		if (reflect_dot_eye <= 0.0)
 		{

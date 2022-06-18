@@ -10,22 +10,10 @@ Canvas::Canvas(const int& width, const int& height)
 {
 	this->width = width;
 	this->height = height;
-	data = new Color*[height];
-	for (int i = 0; i < height; i++)
-	{
-		data[i] = new Color[width];
-	}
-
+	this->data.resize(height, vector<Color>(width));
 }
 
-Canvas::~Canvas()
-{
-	for (int i = 0; i < this->height; i++)
-	{
-		delete [] data[i];
-	}
-	delete [] data;
-}
+Canvas::~Canvas() { }
 
 void Canvas::writePixel(const int& x, const int& y, const Color& c)
 {

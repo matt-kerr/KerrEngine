@@ -11,17 +11,14 @@
 Intersection::Intersection()
 {
 	this->t = -1.0;
-	this->obj = nullptr;
-	this->obj_type = "NONE";
 }
 
 Intersection::~Intersection() { }
 
-Intersection::Intersection(double t, void* obj, std::string obj_type)
+Intersection::Intersection(double t, Sphere obj)
 {
 	this->t = t;
 	this->obj = obj;
-	this->obj_type = obj_type;
 }
 // == operator overload
 bool Intersection::operator==(const Intersection& rhs) { return this->t == rhs.t; }
@@ -65,19 +62,10 @@ std::vector<Intersection> Intersection::intersections(int count, std::vector<Int
 
 Intersection Intersection::hit(std::vector<Intersection> xs)
 {
-	int index = -1;
-	double lowest_value = 999999999.99;
+	// list must be sorted
 	for (int i = 0; i < xs.size(); i++)
 	{
-		if ((xs[i].t >= 0) && (xs[i].t < lowest_value))
-		{
-			index = i;
-			lowest_value = xs[i].t;
-		}
+		if (xs[i].t >= 0) { return xs[i]; }
 	}
-	if (index == -1)
-	{
-		return Intersection(-1, nullptr, "NONE");
-	}	
-	return xs[index];
+	return Intersection(-1, Sphere());
 }

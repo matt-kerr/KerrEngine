@@ -25,11 +25,11 @@ Matrix Ray::position(const Ray& r, const double& t)
 }
 
 
-std::vector<Intersection> Ray::intersectSphere(const Ray& r, Sphere* s)
+std::vector<Intersection> Ray::intersectSphere(const Ray& r, Sphere s)
 {
 	std::vector<Intersection> ret;
 	double a, b, c, discriminant;
-	Ray ray2 = Ray::transform(r, Matrix::inverse((*s).transform));
+	Ray ray2 = Ray::transform(r, Matrix::inverse(s.transform));
 	Matrix sphere_to_ray = ray2.origin - Matrix::point(0.0, 0.0, 0.0);
 	a = Matrix::dot(ray2.direction, ray2.direction);
 	b = 2.0 * Matrix::dot(ray2.direction, sphere_to_ray);
@@ -39,9 +39,8 @@ std::vector<Intersection> Ray::intersectSphere(const Ray& r, Sphere* s)
 	{
 		return ret;
 	}
-	ret.push_back(Intersection(((-b - sqrt(discriminant)) / (a * 2.0)), s, "SPHERE"));
-	ret.push_back(Intersection(((-b + sqrt(discriminant)) / (a * 2.0)), s, "SPHERE"));
-
+	ret.push_back(Intersection(((-b - sqrt(discriminant)) / (a * 2.0)), s));
+	ret.push_back(Intersection(((-b + sqrt(discriminant)) / (a * 2.0)), s));
 	return ret;
 }
 

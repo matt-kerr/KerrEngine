@@ -20,7 +20,7 @@ class Color
 		Color();
 		Color(const double& r, const double& g, const double& b);
 		virtual ~Color();
-		Color(Color& orig); // copy constructor
+		Color(const Color& orig); // copy constructor
 		Color(Color&& orig) noexcept; // move constructor
 
 		// operator overloads

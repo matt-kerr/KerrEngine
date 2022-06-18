@@ -10,6 +10,7 @@
 #include "Color.h"
 #include "PointLight.h"
 #include "Sphere.h"
+#include "Computations.h"
 using namespace std;
 
 class World
@@ -24,6 +25,8 @@ class World
 
 		// world functions
 		static std::vector<Intersection> intersectWorld(World w, const Ray& r);
+		static Color shadeHit(const World& world, const Computations& comps);
+		static Color colorAt(World world, const Ray& ray);
 };
 
 #endif;

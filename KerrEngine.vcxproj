@@ -140,6 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Canvas.cpp" />
     <ClCompile Include="Intersection.cpp" />
@@ -149,11 +150,13 @@
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="PointLight.cpp" />
+    <ClCompile Include="Computations.cpp" />
     <ClCompile Include="Ray.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Canvas.h" />
     <ClInclude Include="Intersection.h" />
@@ -162,6 +165,7 @@
     <ClInclude Include="Material.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="PointLight.h" />
+    <ClInclude Include="Computations.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Sphere.h" />
@@ -171,7 +175,8 @@
     <ResourceCompile Include="KerrEngine.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="images\sphere_with_lighting.jpg" />
+    <Image Include="images\spheres_scene.png" />
+    <Image Include="images\sphere_with_lighting.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

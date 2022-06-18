@@ -5,18 +5,18 @@
 
 #include <string>
 #include <vector>
+#include "Sphere.h"
 using namespace std;
 
 class Intersection
 {
 	public:
 		double t;
-		void* obj;
-		string obj_type;
+		Sphere obj;
 		
 		Intersection();
 		virtual ~Intersection();
-		Intersection(double t, void* obj, std::string obj_type);
+		Intersection(double t, Sphere obj);
 		bool operator==(const Intersection& rhs); // == operator overload
 		bool operator<(const Intersection& rhs); // < operator overload
 		bool operator>(const Intersection& rhs); // > operator overload

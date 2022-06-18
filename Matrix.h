@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <numbers>
+#include <string>
 using namespace std;
 
 class Matrix
@@ -17,14 +18,14 @@ class Matrix
 	public:
 		int rows;
 		int cols;
-		string type;
+		std::string type;
 		double * data;
 
 		// constructors
 		Matrix();
 		virtual ~Matrix();
 		Matrix(int rows, int cols);
-		Matrix(Matrix& orig); // copy constructor
+		Matrix(const Matrix& orig); // copy constructor
 		Matrix(Matrix&& orig) noexcept; // move constructor
 
 		// operator overloads
@@ -66,6 +67,7 @@ class Matrix
 		static double cofactor(const Matrix& m, const int& elim_row, const int& elim_col);
 		static double magnitude(const Matrix& m);
 		static Matrix reflect(const Matrix& in, const Matrix& normal); // vector mode only
+		static Matrix viewTransform(const Matrix& from, const Matrix& to, const Matrix& up);
 };
 
 #endif

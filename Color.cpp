@@ -32,7 +32,7 @@ Color::Color(const double& r, const double& g, const double& b)
 Color::~Color() {}
 
 // copy constructor
-Color::Color(Color& orig)
+Color::Color(const Color& orig)
 {
 	this->r = orig.r;
 	this->g = orig.g;

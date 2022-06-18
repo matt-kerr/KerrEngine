@@ -56,7 +56,7 @@ Matrix::Matrix(int rows, int cols)
 Matrix::~Matrix() { delete [] data; }
 
 // copy constructor
-Matrix::Matrix(Matrix& orig)
+Matrix::Matrix(const Matrix& orig)
 {
 	this->rows = orig.rows;
 	this->cols = orig.cols;
@@ -550,4 +550,25 @@ Matrix Matrix::reflect(const Matrix& in, const Matrix& normal)
 {
 	if (in.type != "VECTOR" || normal.type != "VECTOR") { throw KerrEngineException("EXCEPTION_ATTEMPTED_REFLECT_NON_VECTOR"); }
 	return in - normal * 2 * Matrix::dot(in, normal);
+}
+
+Matrix Matrix::viewTransform(const Matrix& from, const Matrix& to, const Matrix& up)
+{
+	if (from.type != "POINT" || to.type != "POINT" || up.type != "VECTOR") { throw KerrEngineException("EXCEPTION_INVALID_VIEWTRANSFORM_PARAMETERS"); }
+	Matrix forward = Matrix::normalize(to - from);
+	Matrix upn = Matrix::normalize(up);
+	Matrix left = Matrix::cross(forward, upn);
+	Matrix true_up = Matrix::cross(left, forward);
+	Matrix orientation(4, 4);
+	orientation(0, 0) = left(0, 0); // left.x
+	orientation(0, 1) = left(1, 0); // left.y
+	orientation(0, 2) = left(2, 0); // left.z
+	orientation(1, 0) = true_up(0, 0); // true_up.x
+	orientation(1, 1) = true_up(1, 0); // true_up.y
+	orientation(1, 2) = true_up(2, 0); // true_up.z
+	orientation(2, 0) = -forward(0, 0); // -forward.x
+	orientation(2, 1) = -forward(1, 0); // -forward.y
+	orientation(2, 2) = -forward(2, 0); // -forward.z
+	orientation(3, 3) = 1.0;
+	return orientation * Matrix::translation(-from(0, 0), -from(1, 0), -from(2, 0));
 }

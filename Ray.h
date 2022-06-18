@@ -23,7 +23,7 @@ class Ray
 
 		// ray functions
 		static Matrix position(const Ray& r, const double& t);
-		static std::vector<Intersection> intersectSphere(const Ray& r, Sphere* s);
+		static std::vector<Intersection> intersectSphere(const Ray& r, Sphere s);
 		static Ray transform(const Ray& r, const Matrix& m);
 };
 

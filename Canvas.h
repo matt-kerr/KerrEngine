@@ -3,6 +3,7 @@
 #ifndef CANVAS_H
 #define CANVAS_H
 
+#include <vector>
 #include <string>
 #include "Color.h"
 using namespace std;
@@ -12,7 +13,7 @@ class Canvas
 	public:
 		int width;
 		int height;
-		Color ** data;
+		std::vector<std::vector<Color>> data;
 		Canvas(const int& width, const int& height);
 		virtual ~Canvas();
 		void writePixel(const int& row, const int& col, const Color& c);

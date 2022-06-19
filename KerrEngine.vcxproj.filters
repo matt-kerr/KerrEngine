@@ -114,5 +114,11 @@
     <Image Include="images\spheres_scene.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="images\spheres_shadow_bug.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="images\spheres_shadow_bug_small.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

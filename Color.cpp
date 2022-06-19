@@ -12,7 +12,7 @@ istream& operator>>(istream& in, Color& c)
 }
 ostream& operator<<(ostream& out, const Color& c)
 {
-	cout << "color(" << std::to_string(c.r) << ", " + std::to_string(c.g) << ", " << std::to_string(c.b) << ")";
+	cout << "color(" << std::to_string(c.r) << ", " + std::to_string(c.g) << ", " << std::to_string(c.b) << ")" << endl;
 	return out;
 }
 

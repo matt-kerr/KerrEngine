@@ -4,7 +4,7 @@
 #include "Matrix.h"
 #include "KerrEngineException.h"
 
-Sphere::Sphere() { }
+Sphere::Sphere() { this->transform = Matrix::identity(4); }
 
 Sphere::~Sphere() { }
 

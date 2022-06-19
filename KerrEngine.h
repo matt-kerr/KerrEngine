@@ -2,6 +2,10 @@
 
 #ifndef KERRENGINE_H
 #define KERRENGINE_H
+#define EPSILON 0.0001
+#define VECTOR 0
+#define POINT 1
+#define DEBUG 1
 
 using namespace std;
 

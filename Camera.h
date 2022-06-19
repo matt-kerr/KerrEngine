@@ -25,7 +25,7 @@ class Camera
         Camera(const int& hsize, const int& vsize, const double& field_of_view);
 
         // camera functions
-        static Ray rayForPixel(const Camera& c, const double& px, const double& py);
+        static Ray rayForPixel(const Camera& camera, const double& px, const double& py);
         static Canvas render(const Camera& camera, const World& world);
 };
 

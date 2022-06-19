@@ -26,7 +26,7 @@ class Material
 		bool operator==(const Material& rhs); // == operator overload
 
 
-		static Color lighting(const Material& material, const PointLight& light, const Matrix& point, const Matrix& eyev, const Matrix& normalv);
+		static Color lighting(const Material& material, const PointLight& light, const Matrix& point, const Matrix& eyev, const Matrix& normalv, const bool& in_shadow);
 };
 
 #endif

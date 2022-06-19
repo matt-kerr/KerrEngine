@@ -26,7 +26,8 @@ class World
 		// world functions
 		static std::vector<Intersection> intersectWorld(World w, const Ray& r);
 		static Color shadeHit(const World& world, const Computations& comps);
-		static Color colorAt(World world, const Ray& ray);
+		static Color colorAt(const World& world, const Ray& ray);
+		static bool isShadowed(const World& world, const Matrix& point);
 };
 
 #endif;

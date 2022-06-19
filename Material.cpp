@@ -79,13 +79,14 @@ bool Material::operator==(const Material& rhs)
 		&&	(this->shininess == rhs.shininess));
 }
 
-Color Material::lighting(const Material& material, const PointLight& light, const Matrix& point, const Matrix& eyev, const Matrix& normalv)
+Color Material::lighting(const Material& material, const PointLight& light, const Matrix& point, const Matrix& eyev, const Matrix& normalv, const bool& in_shadow)
 {
 	Color black(0.0, 0.0, 0.0);
 	Color effective_color = material.color * light.intensity;
 	Matrix lightv = Matrix::normalize(light.position - point);
 	Matrix reflectv;
 	Color cont_ambient = effective_color * material.ambient;
+	if (in_shadow) { return cont_ambient; }
 	Color cont_diffuse, cont_specular;
 	double light_dot_normal = Matrix::dot(lightv, normalv);
 	double reflect_dot_eye, factor;

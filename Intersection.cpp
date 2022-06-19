@@ -10,7 +10,7 @@
 
 Intersection::Intersection()
 {
-	this->t = -1.0;
+	this->t = -999.0;
 }
 
 Intersection::~Intersection() { }
@@ -67,5 +67,6 @@ Intersection Intersection::hit(std::vector<Intersection> xs)
 	{
 		if (xs[i].t >= 0) { return xs[i]; }
 	}
-	return Intersection(-1, Sphere());
+	// no hit
+	return Intersection(-999.0, Sphere());
 }

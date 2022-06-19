@@ -1,5 +1,7 @@
 // Matthew Kerr
+
 #include "Matrix.h"
+#include "KerrEngine.h"
 #include "KerrEngineException.h"
 
 std::ostream& operator<<(std::ostream& out, const Matrix& m)
@@ -153,7 +155,7 @@ Matrix Matrix::operator-() const
 	{
 		for (int j = 0; j < ret.cols; j++)
 		{
-			ret(i, j) = (*this)(i, j) * -1.0;
+			ret(i, j) = -(*this)(i, j);
 		}
 	}
 	if (this->type == "VECTOR" || this->type == "POINT") { ret(3, 0) = (*this)(3, 0); }
@@ -199,12 +201,12 @@ Matrix Matrix::operator+(const Matrix& rhs) const
 		for (int j = 0; j < this->cols; j++)
 		{
 			temp = (*this)(i, j) + rhs(i, j);
-			ret(i, j) = abs(temp) < EPSILON ? 0.0 : temp;
+			ret(i, j) = std::abs(temp) < EPSILON ? 0.0 : temp;
 		}
 	}
-	if (this->type == "VECTOR" && rhs.type == "VECTOR") { ret.type = "VECTOR"; }
-	if (this->type == "VECTOR" && rhs.type == "POINT") { ret.type = "POINT"; }
-	if (this->type == "POINT" && rhs.type == "VECTOR") { ret.type = "POINT"; }
+	if (this->type == "VECTOR" && rhs.type == "VECTOR") { ret.type = "VECTOR"; ret(3, 0) = VECTOR; }
+	if (this->type == "VECTOR" && rhs.type == "POINT") { ret.type = "POINT"; ret(3, 0) = POINT; }
+	if (this->type == "POINT" && rhs.type == "VECTOR") { ret.type = "POINT"; ret(3, 0) = POINT; }
 	return ret;
 }
 
@@ -221,12 +223,12 @@ Matrix Matrix::operator-(const Matrix& rhs) const
 		for (int j = 0; j < this->cols; j++)
 		{
 			temp = (*this)(i, j) - rhs(i, j);
-			ret(i, j) = abs(temp) < EPSILON ? 0.0 : temp;
+			ret(i, j) = std::abs(temp) < EPSILON ? 0.0 : temp;
 		}
 	}
-	if (this->type == "VECTOR" && rhs.type == "VECTOR") { ret.type = "VECTOR"; }
-	if (this->type == "POINT" && rhs.type == "POINT") { ret.type = "VECTOR"; }
-	if (this->type == "POINT" && rhs.type == "VECTOR") { ret.type = "POINT"; }
+	if (this->type == "VECTOR" && rhs.type == "VECTOR") { ret.type = "VECTOR"; ret(3, 0) = VECTOR; }
+	if (this->type == "POINT" && rhs.type == "POINT") { ret.type = "VECTOR"; ret(3, 0) = VECTOR; }
+	if (this->type == "POINT" && rhs.type == "VECTOR") { ret.type = "POINT"; ret(3, 0) = POINT; }
 	return ret;
 }
 
@@ -247,7 +249,7 @@ Matrix Matrix::operator*(const Matrix& rhs) const
 		for (int j = 0; j < ret.cols; j++)
 		{
 			temp = Matrix::dot((*this), rhs, i, j);
-			ret(i, j) = abs(temp) < EPSILON ? 0.0 : temp;
+			ret(i, j) = std::abs(temp) < EPSILON ? 0.0 : temp;
 		}
 	}
 	
@@ -266,7 +268,7 @@ Matrix Matrix::operator*(const double& rhs) const
 		for (int j = 0; j < this->cols; j++)
 		{
 			temp = (*this)(i, j) * rhs;
-			ret(i, j) = abs(temp) < EPSILON ? 0.0 : temp;
+			ret(i, j) = std::abs(temp) < EPSILON ? 0.0 : temp;
 		}
 	}
 	if (this->type == "VECTOR" || this->type == "POINT") { ret(3, 0) = (*this)(3, 0); }
@@ -285,7 +287,7 @@ Matrix Matrix::operator/(const double& rhs) const
 		for (int j = 0; j < this->cols; j++)
 		{
 			temp = (*this)(i, j) / rhs;
-			ret(i, j) = abs(temp) < EPSILON ? 0.0 : temp; 
+			ret(i, j) = std::abs(temp) < EPSILON ? 0.0 : temp;
 		}
 	}
 	if (this->type == "VECTOR" || this->type == "POINT") { ret(3, 0) = (*this)(3, 0); }
@@ -336,7 +338,13 @@ Matrix Matrix::normalize(const Matrix& m)
 {
 	if (m.type != "VECTOR") { throw KerrEngineException("EXCEPTION_ATTEMPTED_NORMALIZE_NON_VECTOR"); }
 	double magnitude = Matrix::magnitude(m);
-	return Matrix::vector((m(0, 0) / magnitude), (m(1, 0) / magnitude), (m(2, 0) / magnitude));
+	double adj_x = m(0, 0) / magnitude;
+	double adj_y = m(1, 0) / magnitude;
+	double adj_z = m(2, 0) / magnitude;
+	adj_x = (std::abs(adj_x) < EPSILON) ? 0.0 : adj_x;
+	adj_y = (std::abs(adj_y) < EPSILON) ? 0.0 : adj_y;
+	adj_z = (std::abs(adj_z) < EPSILON) ? 0.0 : adj_z;
+	return Matrix::vector(adj_x, adj_y, adj_z);
 }
 
 Matrix Matrix::identity(const int& size)
@@ -377,7 +385,6 @@ Matrix Matrix::inverse(const Matrix& m)
 	if (!Matrix::isInvertible(m)) { throw KerrEngineException("EXCEPTION_MATRIX_NOT_INVERTIBLE"); }
 	Matrix ret(m.rows, m.cols);
 	double det = Matrix::determinant(m);
-
 	for (int i = 0; i < m.rows; i++)
 	{
 		for (int j = 0; j < m.cols; j++)
@@ -476,7 +483,7 @@ Matrix Matrix::cross(const Matrix& lhs, const Matrix& rhs)
 	// Check that both are vectors
 	if (lhs.type != "VECTOR" || rhs.type != "VECTOR") { throw KerrEngineException("EXCEPTION_DOT_PRODUCT_NOT_VECTORS"); }
 	return Matrix::vector(
-		(lhs(1, 0) * rhs(2, 0)) - (lhs(2, 0) * rhs(1, 0))
+		  (lhs(1, 0) * rhs(2, 0)) - (lhs(2, 0) * rhs(1, 0))
 		, (lhs(2, 0) * rhs(0, 0)) - (lhs(0, 0) * rhs(2, 0))
 		, (lhs(0, 0) * rhs(1, 0)) - (lhs(1, 0) * rhs(0, 0)));
 }
@@ -493,10 +500,7 @@ double Matrix::dot(const Matrix& lhs, const Matrix& rhs)
 double Matrix::dot(const Matrix& lhs, const Matrix& rhs, const int& row, const int& col)
 {
 	// Number of columns of first matrix must equal number of rows of the second matrix
-	if (lhs.cols != rhs.rows)
-	{
-		throw KerrEngineException("EXCEPTION_MATRIX_MULTIPLICATION_INVALID_MATRIX_SIZES");
-	}
+	if (lhs.cols != rhs.rows) { throw KerrEngineException("EXCEPTION_MATRIX_MULTIPLICATION_INVALID_MATRIX_SIZES"); }
 	double result = 0.0;
 	for (int i = 0; i < lhs.cols; i++)
 	{
@@ -510,9 +514,7 @@ double Matrix::dot(const Matrix& lhs, const Matrix& rhs, const int& row, const i
 double Matrix::determinant(const Matrix& m)
 {
 	if ((m.rows != m.cols) || (m.rows < 2) || (m.rows > 4)) { throw KerrEngineException("EXCEPTION_MATRIX_DETERMINANT_INVALID_MATRIX_SIZE"); }
-	else if (m.rows == 2 || m.cols == 2)
-	{
-		return (m(0, 0) * m(1, 1)) - (m(0, 1) * m(1, 0));
+	else if (m.rows == 2 || m.cols == 2) { return ((m(0, 0) * m(1, 1)) - ((m(0, 1) * m(1, 0))));
 	}
 	else
 	{
@@ -527,12 +529,14 @@ double Matrix::determinant(const Matrix& m)
 
 double Matrix::minor(const Matrix& m, const int& elim_row, const int& elim_col)
 {
+	if (m.type != "MATRIX") { throw KerrEngineException("EXCEPTION_MATRIX_MINOR_INVALID_PARAMETER"); }
 	if ((m.rows != m.cols) || (m.rows < 3) || (m.rows > 4)) { throw KerrEngineException("EXCEPTION_MATRIX_MINOR_INVALID_MATRIX_SIZE"); }
 	return Matrix::determinant(Matrix::submatrix(m, elim_row, elim_col));
 }
 
 double Matrix::cofactor(const Matrix& m, const int& elim_row, const int& elim_col)
 {
+	if (m.type != "MATRIX") { throw KerrEngineException("EXCEPTION_MATRIX_COFACTOR_INVALID_PARAMETER"); }
 	if ((m.rows != m.cols) || (m.rows < 3) || (m.rows > 4)) { throw KerrEngineException("EXCEPTION_MATRIX_MINOR_INVALID_MATRIX_SIZE"); }
 	Matrix temp = Matrix::submatrix(m, elim_row, elim_col);
 	return (((elim_row + elim_col) % 2 == 0) ? 1 : -1) * Matrix::determinant(temp);
@@ -542,14 +546,20 @@ double Matrix::cofactor(const Matrix& m, const int& elim_row, const int& elim_co
 double Matrix::magnitude(const Matrix& m)
 {
 	if (m.type != "VECTOR") { throw KerrEngineException("EXCEPTION_ATTEMPTED_MAGNITUDE_NON_VECTOR"); }
-	return sqrt(pow(m(0, 0), 2) + pow(m(1, 0), 2) + pow(m(2, 0), 2));
+	double adj_x = pow(m(0, 0), 2);
+	double adj_y = pow(m(1, 0), 2);
+	double adj_z = pow(m(2, 0), 2);
+	adj_x = (std::abs(adj_x) < EPSILON) ? 0.0 : adj_x;
+	adj_y = (std::abs(adj_y) < EPSILON) ? 0.0 : adj_y;
+	adj_z = (std::abs(adj_z) < EPSILON) ? 0.0 : adj_z;
+	return sqrt( + pow(m(1, 0), 2) + pow(m(2, 0), 2));
 }
 
 // vector mode only
 Matrix Matrix::reflect(const Matrix& in, const Matrix& normal)
 {
 	if (in.type != "VECTOR" || normal.type != "VECTOR") { throw KerrEngineException("EXCEPTION_ATTEMPTED_REFLECT_NON_VECTOR"); }
-	return in - normal * 2 * Matrix::dot(in, normal);
+	return in - normal * 2.0 * Matrix::dot(in, normal);
 }
 
 Matrix Matrix::viewTransform(const Matrix& from, const Matrix& to, const Matrix& up)

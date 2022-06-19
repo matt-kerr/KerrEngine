@@ -2,9 +2,6 @@
 
 #ifndef MATRIX_H
 #define MATRIX_H
-#define EPSILON 0.0001
-#define VECTOR 0
-#define POINT 1
 
 #include <iostream>
 #include <numbers>

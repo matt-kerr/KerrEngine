@@ -10,8 +10,8 @@ using namespace std;
 class Sphere
 {
 public:
-	Matrix transform = Matrix::identity(4);
-	Material material = Material();
+	Matrix transform;
+	Material material;
 
 	// constructors
 	Sphere();

@@ -14,14 +14,15 @@ class Computations
 		double t;
 		Sphere obj;
 		Matrix point;
+		Matrix over_point;
 		Matrix eyev;
 		Matrix normalv;
 		bool inside;
-
+		
 		// constructors
 		Computations();
 		virtual ~Computations();
-		Computations(double t, Sphere obj, Matrix point, Matrix eyev, Matrix normalv, bool inside);
+		Computations(double t, Sphere obj, Matrix point, Matrix over_point, Matrix eyev, Matrix normalv, bool inside);
 		Computations(const Computations& orig); // copy constructor
 		Computations(Computations&& orig); // move constructor
 

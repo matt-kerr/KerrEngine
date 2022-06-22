@@ -86,7 +86,8 @@ Color Material::lighting(const Material& material, const PointLight& light, cons
 	Matrix lightv = Matrix::normalize(light.position - point);
 	Matrix reflectv;
 	Color cont_ambient = effective_color * material.ambient;
-	if (in_shadow) { return cont_ambient; }
+	if (in_shadow) { return Color::create(1.0, 0.0, 0.0); }
+	//if (in_shadow) { return cont_ambient; }
 	Color cont_diffuse, cont_specular;
 	double light_dot_normal = Matrix::dot(lightv, normalv);
 	double reflect_dot_eye, factor;

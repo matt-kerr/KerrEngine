@@ -32,13 +32,13 @@ std::vector<Intersection> Ray::intersectSphere(const Ray& r, Sphere s)
 	Matrix sphere_to_ray = ray2.origin - Matrix::point(0.0, 0.0, 0.0);
 	a = Matrix::dot(ray2.direction, ray2.direction);
 	b = 2.0 * Matrix::dot(ray2.direction, sphere_to_ray);
-	c = Matrix::dot(sphere_to_ray, sphere_to_ray) - 1;
+	c = Matrix::dot(sphere_to_ray, sphere_to_ray) - 1.0;
 	a = (std::abs(a) < EPSILON) ? 0.0 : a;
 	b = (std::abs(b) < EPSILON) ? 0.0 : b;
 	c = (std::abs(c) < EPSILON) ? 0.0 : c;
 	discriminant = pow(b, 2.0) - (4.0 * a * c);
 	discriminant = (std::abs(discriminant) < EPSILON) ? 0.0 : discriminant;
-	if (discriminant < 0)
+	if (discriminant < 0.0)
 	{
 		if (DEBUG) { cout << "        Ray::intersectSphere discriminant = " << discriminant << ", returning early" << endl; }
 		return ret;

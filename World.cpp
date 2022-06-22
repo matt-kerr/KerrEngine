@@ -135,12 +135,13 @@ bool World::isShadowed(const World& world, const Matrix& point)
 		}
 		cout << "World::isShadowed ht_adj = " << ht_adj << endl;
 	}
-	if (ht_adj < distance)
+	if (ht_adj > 0.0 && ht_adj < distance)
 	{
 		if (DEBUG) { cout << "World::isShadowed returning true" << endl; }
+		//system("pause");
 		return true;
 	}
-	if (DEBUG) { cout << "World::isShadowed returning false" << endl; system("pause"); }
+	if (DEBUG) { cout << "World::isShadowed returning false" << endl; }
 	
 	return false;
 }

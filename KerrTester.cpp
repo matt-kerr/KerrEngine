@@ -68,7 +68,7 @@ int main()
 	world.spheres.push_back(right);
 	world.spheres.push_back(left);
 
-	Camera camera(80, 60, (std::numbers::pi / 3));
+	Camera camera(800, 600, (std::numbers::pi / 3));
 	camera.transform = Matrix::viewTransform(Matrix::point(0.0, 1.5, -5.0), Matrix::point(0.0, 1.0, 0.0), Matrix::vector(0.0, 1.0, 0.0));
 
 	Canvas c = Camera::render(camera, world);

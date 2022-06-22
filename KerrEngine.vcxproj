@@ -178,6 +178,7 @@
     <Image Include="images\spheres_scene.png" />
     <Image Include="images\spheres_shadow_bug.png" />
     <Image Include="images\spheres_shadow_bug_small.png" />
+    <Image Include="images\spheres_shadow_red.png" />
     <Image Include="images\sphere_with_lighting.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

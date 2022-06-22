@@ -120,5 +120,8 @@
     <Image Include="images\spheres_shadow_bug_small.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="images\spheres_shadow_red.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

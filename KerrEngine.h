@@ -5,7 +5,7 @@
 #define EPSILON 0.0001
 #define VECTOR 0
 #define POINT 1
-#define DEBUG 1
+#define DEBUG 0
 
 using namespace std;
 

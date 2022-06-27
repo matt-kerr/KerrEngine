@@ -514,17 +514,14 @@ double Matrix::dot(const Matrix& lhs, const Matrix& rhs, const int& row, const i
 double Matrix::determinant(const Matrix& m)
 {
 	if ((m.rows != m.cols) || (m.rows < 2) || (m.rows > 4)) { throw KerrEngineException("EXCEPTION_MATRIX_DETERMINANT_INVALID_MATRIX_SIZE"); }
-	else if (m.rows == 2 || m.cols == 2) { return ((m(0, 0) * m(1, 1)) - ((m(0, 1) * m(1, 0))));
-	}
-	else
+	if (m.rows == 2 || m.cols == 2) { return ((m(0, 0) * m(1, 1)) - ((m(0, 1) * m(1, 0)))); }
+
+	double det = 0.0;
+	for (int i = 0; i < m.cols; i++)
 	{
-		double det = 0.0;
-		for (int i = 0; i < m.cols; i++)
-		{
-			det += m(0, i) * Matrix::cofactor(m, 0, i);
-		}
-		return det;
+		det += m(0, i) * Matrix::cofactor(m, 0, i);
 	}
+	return det;
 }
 
 double Matrix::minor(const Matrix& m, const int& elim_row, const int& elim_col)
@@ -573,12 +570,18 @@ Matrix Matrix::viewTransform(const Matrix& from, const Matrix& to, const Matrix&
 	orientation(0, 0) = left(0, 0); // left.x
 	orientation(0, 1) = left(1, 0); // left.y
 	orientation(0, 2) = left(2, 0); // left.z
+	orientation(0, 3) = 0.0;
 	orientation(1, 0) = true_up(0, 0); // true_up.x
 	orientation(1, 1) = true_up(1, 0); // true_up.y
 	orientation(1, 2) = true_up(2, 0); // true_up.z
+	orientation(1, 3) = 0.0;
 	orientation(2, 0) = -forward(0, 0); // -forward.x
 	orientation(2, 1) = -forward(1, 0); // -forward.y
 	orientation(2, 2) = -forward(2, 0); // -forward.z
+	orientation(2, 3) = 0.0;
+	orientation(3, 0) = 0.0;
+	orientation(3, 1) = 0.0;
+	orientation(3, 2) = 0.0;
 	orientation(3, 3) = 1.0;
 	return orientation * Matrix::translation(-from(0, 0), -from(1, 0), -from(2, 0));
 }

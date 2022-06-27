@@ -2,7 +2,7 @@
 
 #ifndef KERRENGINE_H
 #define KERRENGINE_H
-#define EPSILON 0.0001
+#define EPSILON 0.00001
 #define VECTOR 0
 #define POINT 1
 #define DEBUG 0

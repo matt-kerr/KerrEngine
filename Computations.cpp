@@ -74,7 +74,6 @@ Computations Computations::prepareComputations(Intersection intersection, Ray ra
 	Matrix eyev = -ray.direction;
 	Matrix normalv = Sphere::normalAt(obj, point);
 	bool inside = false;
-
 	if (Matrix::dot(normalv, eyev) < 0.0)
 	{
 		inside = true;
@@ -85,15 +84,5 @@ Computations Computations::prepareComputations(Intersection intersection, Ray ra
 		inside = false;
 	}
 	Matrix over_point = point + normalv * EPSILON;
-	if (DEBUG)
-	{
-		cout << "Computations::prepareComputations returning" << endl;
-		cout << "    t = " << t << endl;
-		cout << "    obj.material.color  = " << obj.material.color;
-		cout << "    point = " << point;
-		cout << "    eyev = " << eyev;
-		cout << "    normalv = " << normalv;
-		cout << "    inside = " << inside << endl;
-	}
 	return Computations(t, obj, point, over_point, eyev, normalv, inside);
 }

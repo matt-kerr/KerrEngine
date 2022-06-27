@@ -41,18 +41,6 @@ Ray Camera::rayForPixel(const Camera& camera, const double& px, const double& py
     Matrix pixel = Matrix::inverse(camera.transform) * Matrix::point(world_x, world_y, -1.0);
     Matrix origin = Matrix::inverse(camera.transform) * Matrix::point(0.0, 0.0, 0.0);
     Matrix direction = Matrix::normalize(pixel - origin);
-    if (DEBUG)
-    {
-        cout << "Camera::rayForPixel values:" << endl;
-        cout << "    xoffset = " << xoffset << endl;
-        cout << "    yoffset = " << yoffset << endl;
-        cout << "    world_x = " << world_x << endl;
-        cout << "    world_y = " << world_y << endl;
-        cout << "    pixel = " << pixel;
-        cout << "    returning Ray:" << endl;
-        cout << "    origin = " << origin;
-        cout << "    direction = " << direction << endl;
-    }
     return Ray(origin, direction);
 }
 

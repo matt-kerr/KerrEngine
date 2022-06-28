@@ -1,8 +1,6 @@
 // Matthew Kerr
 
-#include <iostream>
 #include "Color.h"
-#include "KerrEngineException.h"
 using namespace std;
 
 istream& operator>>(istream& in, Color& c)
@@ -65,7 +63,9 @@ Color& Color::operator=(Color&& orig)
 
 bool Color::operator==(const Color& rhs)
 {
-	return ((this->r == rhs.r) && (this->g == rhs.g) && (this->b == rhs.b));
+	return KerrEngine::almost_equal(this->r, rhs.r)
+		&& KerrEngine::almost_equal(this->g, rhs.g)
+		&& KerrEngine::almost_equal(this->b, rhs.b);
 }
 
 Color Color::operator+(const Color& c2) const

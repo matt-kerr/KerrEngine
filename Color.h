@@ -4,6 +4,8 @@
 #define COLOR_H
 
 #include <iostream>
+#include "KerrEngine.h"
+#include "KerrEngineException.h"
 using namespace std;
 
 class Color

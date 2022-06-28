@@ -1,8 +1,6 @@
 // Matthew Kerr
 
 #include "Sphere.h"
-#include "Matrix.h"
-#include "KerrEngineException.h"
 
 Sphere::Sphere() { this->transform = Matrix::identity(4); }
 

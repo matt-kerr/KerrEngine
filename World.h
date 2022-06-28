@@ -3,7 +3,12 @@
 #ifndef WORLD_H
 #define WORLD_H
 
+#include <algorithm>
 #include <vector>
+#include <iostream>
+#include "World.h"
+#include "KerrEngine.h"
+#include "KerrEngineException.h"
 #include "Intersection.h"
 #include "Ray.h"
 #include "Matrix.h"

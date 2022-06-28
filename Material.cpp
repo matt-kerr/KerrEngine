@@ -1,8 +1,6 @@
 // Matthew Kerr
 
 #include "Material.h"
-#include "Color.h"
-#include "KerrEngineException.h"
 
 Material::Material()
 {
@@ -86,7 +84,8 @@ Color Material::lighting(const Material& material, const PointLight& light, cons
 	Matrix lightv = Matrix::normalize(light.position - point);
 	Color cont_ambient = effective_color * material.ambient;
 	if (in_shadow) { return cont_ambient; }
-	Color cont_diffuse, cont_specular;
+	Color cont_diffuse;
+	Color cont_specular;
 	double light_dot_normal = Matrix::dot(lightv, normalv);
 	double reflect_dot_eye, factor;
 	if (light_dot_normal < 0.0)

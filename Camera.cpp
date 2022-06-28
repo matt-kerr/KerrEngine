@@ -1,11 +1,7 @@
 // Matthew Kerr
 
 #include "Camera.h"
-#include "KerrEngine.h"
-#include "KerrEngineException.h"
-#include "Matrix.h"
-#include "Canvas.h"
-#include "World.h"
+using namespace std;
 
 Camera::Camera() { throw KerrEngineException("EXCEPTION_CANNOT_USE_CAMERA_DEFAULT_CONSTRUCTOR"); }
 
@@ -51,11 +47,9 @@ Canvas Camera::render(const Camera& camera, const World& world)
     Color color;
     for (int y = 0; y < (camera.vsize - 1); y++)
     {
+        cout << "row " << (y + 1) << "/" << camera.vsize << endl;
         for (int x = 0; x < (camera.hsize - 1); x++)
         {
-            // separate and print each cell in debug mode, otherwise print at every row start for rendering status update
-            if (DEBUG) { cout << "-------------------------" << endl << "(x=" << x << ", y=" << y << ")" << endl; }
-            else if (x == 0) { cout << "(x=" << x << ",y= " << y << ")" << endl; }
             ray = Camera::rayForPixel(camera, x, y);
             color = World::colorAt(world, ray);
             image.writePixel(x, y, color);

@@ -1,19 +1,6 @@
 // Matthew Kerr
 
-#include <algorithm>
-#include <vector>
-#include <iostream>
-
 #include "World.h"
-#include "KerrEngine.h"
-#include "KerrEngineException.h"
-#include "Intersection.h"
-#include "Ray.h"
-#include "Matrix.h"
-#include "Color.h"
-#include "PointLight.h"
-#include "Sphere.h"
-#include "Computations.h"
 
 World::World()
 {
@@ -49,8 +36,7 @@ std::vector<Intersection> World::intersectWorld(World w, const Ray& r)
 
 Color World::shadeHit(const World& world, const Computations& comps)
 {
-	bool shadowed = World::isShadowed(world, comps.over_point);
-	Color ret = Material::lighting(comps.obj.material, world.light, comps.over_point, comps.eyev, comps.normalv, shadowed);
+	Color ret = Material::lighting(comps.obj.material, world.light, comps.over_point, comps.eyev, comps.normalv, World::isShadowed(world, comps.over_point));
 	return ret;
 }
 
@@ -73,7 +59,6 @@ bool World::isShadowed(const World& world, const Matrix& point)
 	std::vector<Intersection> xs = World::intersectWorld(world, r);
 	Intersection h = Intersection::hit(xs);
 	if (h.t == -999.0) { return false; }
-	double ht_adj = (std::abs(h.t) < EPSILON) ? 0.0 : h.t;
-	if (ht_adj > 0.0 && ht_adj < distance) { return true; }	
+	if (h.t > 0.0 && h.t < distance) { return true; }	
 	return false;
 }

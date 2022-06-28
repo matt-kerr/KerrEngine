@@ -5,6 +5,7 @@
 
 #include "Matrix.h"
 #include "Material.h"
+#include "KerrEngineException.h"
 using namespace std;
 
 class Sphere

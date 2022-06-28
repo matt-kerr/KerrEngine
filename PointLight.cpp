@@ -1,6 +1,5 @@
 // Matthew Kerr
 
-#include "KerrEngineException.h"
 #include "PointLight.h"
 using namespace std;
 

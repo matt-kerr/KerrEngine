@@ -6,6 +6,8 @@
 #include <iostream>
 #include <numbers>
 #include <string>
+#include "KerrEngine.h"
+#include "KerrEngineException.h"
 using namespace std;
 
 class Matrix

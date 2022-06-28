@@ -1,9 +1,6 @@
 // Matthew Kerr
 
-#include <fstream>
-#include <string>
 #include "Canvas.h"
-#include "Color.h"
 using namespace std;
 
 Canvas::Canvas(const int& width, const int& height)

@@ -29,19 +29,21 @@ int main()
 	Sphere floor;
 	floor.transform = Matrix::scaling(10.0, 0.01, 10.0);
 	floor.material.color = Color::create(1.0, 0.9, 0.9);
-	floor.material.specular = 0.5;
+	floor.material.specular = 0.0;
 
 	Sphere left_wall;
 	left_wall.transform = Matrix::translation(0.0, 0.0, 5.0)
 		* Matrix::rotationY(-(std::numbers::pi / 4))
 		* Matrix::rotationX(std::numbers::pi / 2)
 		* Matrix::scaling(10.0, 0.01, 10.0);
+	left_wall.material.specular = 0.0;
 
 	Sphere right_wall;
 	right_wall.transform = Matrix::translation(0.0, 0.0, 5.0)
 		* Matrix::rotationY(std::numbers::pi / 4)
 		* Matrix::rotationX(std::numbers::pi / 2)
 		* Matrix::scaling(10.0, 0.01, 10.0);
+	right_wall.material.specular = 0.0;
 
 	Sphere middle;
 	middle.transform = Matrix::translation(-0.5, 1.0, 0.5);
@@ -68,7 +70,7 @@ int main()
 	world.spheres.push_back(right);
 	world.spheres.push_back(left);
 
-	Camera camera(80, 60, (std::numbers::pi / 3));
+	Camera camera(800, 600, (std::numbers::pi / 3));
 	camera.transform = Matrix::viewTransform(Matrix::point(0.0, 1.5, -5.0), Matrix::point(0.0, 1.0, 0.0), Matrix::vector(0.0, 1.0, 0.0));
 
 	Canvas c = Camera::render(camera, world);

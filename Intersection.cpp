@@ -1,10 +1,5 @@
 // Matthew Kerr
 
-#include <string>
-#include <iostream>
-#include <cstdarg>
-#include <algorithm>
-#include <vector>
 #include "Intersection.h"
 
 
@@ -21,7 +16,7 @@ Intersection::Intersection(double t, Sphere obj)
 	this->obj = obj;
 }
 // == operator overload
-bool Intersection::operator==(const Intersection& rhs) { return this->t == rhs.t; }
+bool Intersection::operator==(const Intersection& rhs) { return KerrEngine::almost_equal(this->t, rhs.t); }
 
 // < operator overload
 bool Intersection::operator<(const Intersection& rhs) { return this->t < rhs.t; }
@@ -65,7 +60,10 @@ Intersection Intersection::hit(std::vector<Intersection> xs)
 	// list must be sorted
 	for (int i = 0; i < xs.size(); i++)
 	{
-		if (xs[i].t >= 0) { return xs[i]; }
+		if (xs[i].t > 0)
+		{
+			return xs[i];
+		}
 	}
 	// no hit
 	return Intersection(-999.0, Sphere());

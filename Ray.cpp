@@ -1,11 +1,6 @@
 // Matthew Kerr
 
 #include "Ray.h"
-#include "KerrEngine.h"
-#include "KerrEngineException.h"
-#include "Matrix.h"
-#include "Sphere.h"
-#include "Intersection.h"
 
 Ray::Ray() { }
 
@@ -32,16 +27,10 @@ std::vector<Intersection> Ray::intersectSphere(const Ray& r, Sphere s)
 	a = Matrix::dot(ray2.direction, ray2.direction);
 	b = 2.0 * Matrix::dot(ray2.direction, sphere_to_ray);
 	c = Matrix::dot(sphere_to_ray, sphere_to_ray) - 1.0;
-	a = (std::abs(a) < EPSILON) ? 0.0 : a;
-	b = (std::abs(b) < EPSILON) ? 0.0 : b;
-	c = (std::abs(c) < EPSILON) ? 0.0 : c;
 	discriminant = pow(b, 2.0) - 4.0 * a * c;
-	discriminant = (std::abs(discriminant) < EPSILON) ? 0.0 : discriminant;
 	if (discriminant < 0.0) { return ret; }
 	double t1 = (-b - sqrt(discriminant)) / (2.0 * a);
 	double t2 = (-b + sqrt(discriminant)) / (2.0 * a);
-	if (std::abs(t1) < EPSILON) { t1 = 0.0; }
-	if (std::abs(t2) < EPSILON) { t2 = 0.0; }
 	ret.push_back(Intersection(t1, s));
 	ret.push_back(Intersection(t2, s));
 	return ret;

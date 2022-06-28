@@ -1,8 +1,6 @@
 // Matthew Kerr
 
 #include "Matrix.h"
-#include "KerrEngine.h"
-#include "KerrEngineException.h"
 
 std::ostream& operator<<(std::ostream& out, const Matrix& m)
 {
@@ -137,7 +135,7 @@ bool Matrix::operator==(const Matrix& rhs)
 	{
 		for (int j = 0; j < this->cols; j++)
 		{
-			if ((*this)(i, j) != rhs(i, j))
+			if (!KerrEngine::almost_equal((*this)(i, j), rhs(i, j)))
 			{
 				return false;
 			}
@@ -195,13 +193,11 @@ Matrix Matrix::operator+(const Matrix& rhs) const
 	if ((this->rows != rhs.rows) || (this->cols != rhs.cols)) { throw KerrEngineException("EXCEPTION_MATRIX_ADDITION_NOT_SAME_SIZES"); }
 	Matrix ret(this->rows, this->cols);
 	ret.data = new double[ret.rows * ret.cols];
-	double temp;
 	for (int i = 0; i < this->rows; i++)
 	{
 		for (int j = 0; j < this->cols; j++)
 		{
-			temp = (*this)(i, j) + rhs(i, j);
-			ret(i, j) = std::abs(temp) < EPSILON ? 0.0 : temp;
+			ret(i, j) = (*this)(i, j) + rhs(i, j);
 		}
 	}
 	if (this->type == "VECTOR" && rhs.type == "VECTOR") { ret.type = "VECTOR"; ret(3, 0) = VECTOR; }
@@ -217,13 +213,11 @@ Matrix Matrix::operator-(const Matrix& rhs) const
 	if ((this->rows != rhs.rows) || (this->cols !=rhs.cols)) { throw KerrEngineException("EXCEPTION_MATRIX_ADDITION_NOT_SAME_SIZES"); }
 	Matrix ret(this->rows, this->cols);
 	ret.data = new double[ret.rows * ret.cols];
-	double temp;
 	for (int i = 0; i < this->rows; i++)
 	{
 		for (int j = 0; j < this->cols; j++)
 		{
-			temp = (*this)(i, j) - rhs(i, j);
-			ret(i, j) = std::abs(temp) < EPSILON ? 0.0 : temp;
+			ret(i, j) = (*this)(i, j) - rhs(i, j);
 		}
 	}
 	if (this->type == "VECTOR" && rhs.type == "VECTOR") { ret.type = "VECTOR"; ret(3, 0) = VECTOR; }
@@ -240,7 +234,6 @@ Matrix Matrix::operator*(const Matrix& rhs) const
 	{
 		throw KerrEngineException("EXCEPTION_MATRIX_MULTIPLICATION_INVALID_MATRIX_SIZES");
 	}
-	double temp;
 	Matrix ret(this->rows, rhs.cols);
 	ret.data = new double[ret.rows * ret.cols];
 	ret.type = rhs.type;
@@ -248,11 +241,9 @@ Matrix Matrix::operator*(const Matrix& rhs) const
 	{
 		for (int j = 0; j < ret.cols; j++)
 		{
-			temp = Matrix::dot((*this), rhs, i, j);
-			ret(i, j) = std::abs(temp) < EPSILON ? 0.0 : temp;
+			ret(i, j) = Matrix::dot((*this), rhs, i, j);
 		}
 	}
-	
 	return ret;
 }
 
@@ -262,13 +253,11 @@ Matrix Matrix::operator*(const double& rhs) const
 	Matrix ret(this->rows, this->cols);
 	ret.type = this->type;
 	ret.data = new double[ret.rows * ret.cols];
-	double temp;
 	for (int i = 0; i < this->rows; i++)
 	{
 		for (int j = 0; j < this->cols; j++)
 		{
-			temp = (*this)(i, j) * rhs;
-			ret(i, j) = std::abs(temp) < EPSILON ? 0.0 : temp;
+			ret(i, j) = (*this)(i, j) * rhs;
 		}
 	}
 	if (this->type == "VECTOR" || this->type == "POINT") { ret(3, 0) = (*this)(3, 0); }
@@ -281,13 +270,11 @@ Matrix Matrix::operator/(const double& rhs) const
 	Matrix ret(this->rows, this->cols);
 	ret.type = this->type;
 	ret.data = new double[ret.rows * ret.cols];
-	double temp;
 	for (int i = 0; i < this->rows; i++)
 	{
 		for (int j = 0; j < this->cols; j++)
 		{
-			temp = (*this)(i, j) / rhs;
-			ret(i, j) = std::abs(temp) < EPSILON ? 0.0 : temp;
+			ret(i, j) = (*this)(i, j) / rhs;
 		}
 	}
 	if (this->type == "VECTOR" || this->type == "POINT") { ret(3, 0) = (*this)(3, 0); }
@@ -338,13 +325,7 @@ Matrix Matrix::normalize(const Matrix& m)
 {
 	if (m.type != "VECTOR") { throw KerrEngineException("EXCEPTION_ATTEMPTED_NORMALIZE_NON_VECTOR"); }
 	double magnitude = Matrix::magnitude(m);
-	double adj_x = m(0, 0) / magnitude;
-	double adj_y = m(1, 0) / magnitude;
-	double adj_z = m(2, 0) / magnitude;
-	adj_x = (std::abs(adj_x) < EPSILON) ? 0.0 : adj_x;
-	adj_y = (std::abs(adj_y) < EPSILON) ? 0.0 : adj_y;
-	adj_z = (std::abs(adj_z) < EPSILON) ? 0.0 : adj_z;
-	return Matrix::vector(adj_x, adj_y, adj_z);
+	return Matrix::vector((m(0, 0) / magnitude), (m(1, 0) / magnitude), (m(2, 0) / magnitude));
 }
 
 Matrix Matrix::identity(const int& size)
@@ -543,13 +524,7 @@ double Matrix::cofactor(const Matrix& m, const int& elim_row, const int& elim_co
 double Matrix::magnitude(const Matrix& m)
 {
 	if (m.type != "VECTOR") { throw KerrEngineException("EXCEPTION_ATTEMPTED_MAGNITUDE_NON_VECTOR"); }
-	double adj_x = pow(m(0, 0), 2);
-	double adj_y = pow(m(1, 0), 2);
-	double adj_z = pow(m(2, 0), 2);
-	adj_x = (std::abs(adj_x) < EPSILON) ? 0.0 : adj_x;
-	adj_y = (std::abs(adj_y) < EPSILON) ? 0.0 : adj_y;
-	adj_z = (std::abs(adj_z) < EPSILON) ? 0.0 : adj_z;
-	return sqrt( + pow(m(1, 0), 2) + pow(m(2, 0), 2));
+	return sqrt(pow(m(0, 0), 2) + pow(m(1, 0), 2) + pow(m(2, 0), 2));
 }
 
 // vector mode only

@@ -1,9 +1,6 @@
 // Matthew Kerr
 
-#include <string>
 #include "Computations.h"
-#include "KerrEngine.h"
-#include "KerrEngineException.h"
 
 Computations::Computations() { throw KerrEngineException("Default constructor for Computations should not be used."); }
 

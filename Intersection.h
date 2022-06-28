@@ -4,7 +4,11 @@
 #define INTERSECTION_H
 
 #include <string>
+#include <iostream>
+#include <cstdarg>
+#include <algorithm>
 #include <vector>
+#include "Intersection.h"
 #include "Sphere.h"
 using namespace std;
 

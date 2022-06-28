@@ -6,6 +6,9 @@
 #include "Color.h"
 #include "Matrix.h"
 #include "PointLight.h"
+#include "KerrEngine.h"
+#include "KerrEngineException.h"
+
 class Material
 {
 	public:
@@ -24,7 +27,6 @@ class Material
 		Material& operator=(const Material& rhs); // = operator overload
 		Material& operator=(Material&& orig); // move = operator overload (move assignment overload)
 		bool operator==(const Material& rhs); // == operator overload
-
 
 		static Color lighting(const Material& material, const PointLight& light, const Matrix& point, const Matrix& eyev, const Matrix& normalv, const bool& in_shadow);
 };

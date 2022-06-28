@@ -3,6 +3,7 @@
 #ifndef CANVAS_H
 #define CANVAS_H
 
+#include <fstream>
 #include <vector>
 #include <string>
 #include "Color.h"

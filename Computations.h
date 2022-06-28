@@ -7,6 +7,9 @@
 #include "Matrix.h"
 #include "Intersection.h"
 #include "Ray.h"
+#include "Computations.h"
+#include "KerrEngine.h"
+#include "KerrEngineException.h"
 
 class Computations
 {

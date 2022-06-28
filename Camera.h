@@ -3,10 +3,12 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
+#include <iostream>
 #include "Matrix.h"
 #include "Ray.h"
 #include "Canvas.h"
 #include "World.h"
+using namespace std;
 
 class Camera
 {

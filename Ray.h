@@ -7,6 +7,7 @@
 #include "Matrix.h"
 #include "Sphere.h"
 #include "Intersection.h"
+#include "KerrEngine.h"
 #include "KerrEngineException.h"
 using namespace std;
 

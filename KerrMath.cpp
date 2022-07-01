@@ -80,8 +80,7 @@ std::vector<Intersection> KerrMath::intersectWorld(const World& world, const Ray
 		else { throw KerrEngineException("EXCEPTION KERRMATH_INTERSECT_UNKNOWN_SHAPE"); }
 		if (curr.size() > 0)
 		{
-			xs.push_back(curr[0]);
-			xs.push_back(curr[1]);
+			for (int j = 0; j < curr.size(); j++) { xs.push_back(curr[j]); }
 		}
 	}
 	if (xs.size() == 0) { return xs; }

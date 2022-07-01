@@ -22,24 +22,10 @@ int main()
 	ofstream fout(images_path + "image.ppm");
 
 	World world;
-	Sphere* floor = new Sphere();
-	floor->transform = Matrix::scaling(10.0, 0.01, 10.0);
-	floor->material.color = Color(1.0, 0.9, 0.9);
+
+	Plane* floor = new Plane();
+	floor->material.color = Color(0.6, 0.6, 0.6);
 	floor->material.specular = 0.0;
-
-	Sphere* left_wall = new Sphere();
-	left_wall->transform = Matrix::translation(0.0, 0.0, 5.0)
-		* Matrix::rotationY(-(std::numbers::pi / 4))
-		* Matrix::rotationX(std::numbers::pi / 2)
-		* Matrix::scaling(10.0, 0.01, 10.0);
-	left_wall->material.specular = 0.0;
-
-	Sphere* right_wall = new Sphere();
-	right_wall->transform = Matrix::translation(0.0, 0.0, 5.0)
-		* Matrix::rotationY(std::numbers::pi / 4)
-		* Matrix::rotationX(std::numbers::pi / 2)
-		* Matrix::scaling(10.0, 0.01, 10.0);
-	right_wall->material.specular = 0.0;
 
 	Sphere* left = new Sphere();
 	left->transform = Matrix::translation(-1.5, 0.33, -0.75) * Matrix::scaling(0.33, 0.33, 0.33);
@@ -55,13 +41,11 @@ int main()
 
 	Sphere* right = new Sphere();
 	right->transform = Matrix::translation(1.5, 0.5, -0.5) * Matrix::scaling(0.5, 0.5, 0.5);
-	right->material.color = Color(0.1, 1.0, 0.5);
+	right->material.color = Color(0.1, 1.0, 0.5); 
 	right->material.diffuse = 0.7;
 	right->material.specular = 0.3;
 
 	world.shapes.push_back(floor);
-	world.shapes.push_back(left_wall);
-	world.shapes.push_back(right_wall);
 	world.shapes.push_back(left);
 	world.shapes.push_back(middle);
 	world.shapes.push_back(right);
@@ -75,8 +59,6 @@ int main()
 
 	world.shapes.clear();
 	delete floor;
-	delete left_wall;
-	delete right_wall;
 	delete left;
 	delete middle;
 	delete right;

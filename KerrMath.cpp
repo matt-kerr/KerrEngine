@@ -2,30 +2,32 @@
 
 Computations KerrMath::prepareComputations(Intersection intersection, Ray ray)
 {
-	if (intersection.obj->type == "NONE") { throw KerrEngineException("EXCEPTION KERRMATH_PREPARECOMPUTATIONS_UNINITIALIZED_SHAPE"); }
-	if (intersection.obj->type == "SPHERE")
+	if (DEBUG)
 	{
-		Matrix point = KerrMath::position(ray, intersection.t);
-		Matrix eyev = -ray.direction;
-		Matrix normalv = KerrMath::normalAt(intersection.obj, point);
-		bool inside = false;
-		if (Matrix::dot(normalv, eyev) < 0.0)
-		{
-			inside = true;
-			normalv = -normalv;
-		}
-		else
-		{
-			inside = false;
-		}
-		Matrix over_point = point + normalv * EPSILON;
-		return Computations(intersection.t, intersection.obj, point, over_point, eyev, normalv, inside);
+		cout << "entered KerrMath::prepareComputations" << endl;
+		cout << "intersection.obj->type = " << intersection.obj->type << endl;
 	}
-	throw KerrEngineException("EXCEPTION KERRMATH_PREPARECOMPUTATIONS_UNKNOWN_SHAPE");
+	if (intersection.obj->type == "NONE") { throw KerrEngineException("EXCEPTION KERRMATH_PREPARECOMPUTATIONS_UNINITIALIZED_SHAPE"); }
+	Matrix point = KerrMath::position(ray, intersection.t);
+	Matrix eyev = -ray.direction;
+	Matrix normalv = KerrMath::normalAt(intersection.obj, point);
+	bool inside = false;
+	if (Matrix::dot(normalv, eyev) < 0.0)
+	{
+		inside = true;
+		normalv = -normalv;
+	}
+	else
+	{
+		inside = false;
+	}
+	Matrix over_point = point + normalv * EPSILON;
+	return Computations(intersection.t, intersection.obj, point, over_point, eyev, normalv, inside);
 }
 
 Color KerrMath::lighting(const Material& material, const PointLight& light, const Matrix& point, const Matrix& eyev, const Matrix& normalv, const bool& in_shadow)
 {
+	if (DEBUG) { cout << "entered KerrMath::lighting" << endl; }
 	Color black(0.0, 0.0, 0.0);
 	Color effective_color = material.color * light.intensity;
 	Matrix lightv = Matrix::normalize(light.position - point);
@@ -60,17 +62,30 @@ Color KerrMath::lighting(const Material& material, const PointLight& light, cons
 
 Matrix KerrMath::position(const Ray& r, const double& t)
 {
+	if (DEBUG) { cout << "entered KerrMath::position" << endl; }
 	return r.origin + r.direction * t;
 }
 
-Ray KerrMath::transform(const Ray& r, const Matrix& m)
+Ray KerrMath::transform(const Ray& ray, const Matrix& m)
 {
-	Ray result((m * r.origin), (m * r.direction));
+	if (DEBUG)
+	{
+		cout << "entered KerrMath::transform" << endl;
+		cout << "ray.origin = " << ray.origin;
+		cout << "ray.direction = " << ray.direction << endl;
+	}
+	Ray result((m * ray.origin), (m * ray.direction));
 	return result;
 }
 
 std::vector<Intersection> KerrMath::intersectWorld(const World& world, const Ray& ray)
 {
+	if (DEBUG)
+	{
+		cout << "entered KerrMath::intersectWorld" << endl;
+		cout << "world.shapes[0].type = " << world.shapes[0]->type << endl;
+		cout << "world.shapes[0].transform = " << endl << world.shapes[0]->transform << endl;
+	}
 	std::vector<Intersection> xs, curr;
 	for (int i = 0; i < world.shapes.size(); i++)
 	{
@@ -90,6 +105,12 @@ std::vector<Intersection> KerrMath::intersectWorld(const World& world, const Ray
 
 std::vector<Intersection> KerrMath::localIntersectSphere(Shape* shape, const Ray& ray)
 {
+	if (DEBUG)
+	{
+		cout << "entered KerrMath::localIntersectSphere" << endl;
+		cout << "shape->type = " << shape->type << endl;
+		cout << "shape->transform = " << endl << shape->transform << endl;
+	}
 	std::vector<Intersection> ret;
 	double a, b, c, discriminant;
 	Ray ray2 = KerrMath::transform(ray, Matrix::inverse(shape->transform));
@@ -108,9 +129,15 @@ std::vector<Intersection> KerrMath::localIntersectSphere(Shape* shape, const Ray
 
 std::vector<Intersection> KerrMath::localIntersectPlane(Shape* shape, const Ray& ray)
 {
+	if (DEBUG)
+	{
+		cout << "entered KerrMath::localIntersectPlane" << endl;
+		cout << "shape->type = " << shape->type << endl;
+		cout << "shape->transform = " << endl << shape->transform << endl;
+	}
 	std::vector<Intersection> ret;
 	Ray ray2 = KerrMath::transform(ray, Matrix::inverse(shape->transform));
-	if (ray2.direction(1, 0) < EPSILON) { return ret; }
+	if (std::abs(ray2.direction(1, 0)) < EPSILON) { return ret; }
 	double t = -ray2.origin(1, 0) / ray2.direction(1, 0);
 	ret.push_back(Intersection(t, shape));
 	return ret;
@@ -118,6 +145,7 @@ std::vector<Intersection> KerrMath::localIntersectPlane(Shape* shape, const Ray&
 
 Matrix KerrMath::normalAt(Shape* shape, const Matrix& point)
 {
+	if (DEBUG) { cout << "entered KerrMath::normalAt" << endl; }
 	if (point.rows != 4 || point.cols != 1 || point(3, 0) != 1) { throw KerrEngineException("EXCEPTION_KERRMATH_NORMALATSPHEREINVALID_MATRIX_SIZE"); }
 	if (shape->type == "NONE") { throw KerrEngineException("EXCEPTION KERRMATH_NORMALAT_UNINITIALIZED_SHAPE"); }
 	Matrix local_point = Matrix::inverse(shape->transform) * point;
@@ -132,33 +160,45 @@ Matrix KerrMath::normalAt(Shape* shape, const Matrix& point)
 
 Matrix KerrMath::localNormalAtSphere(Shape* shape, const Matrix& local_point)
 {
+	if (DEBUG) { cout << "entered KerrMath::localNormalAtSphere" << endl; }
 	if (local_point.rows != 4 || local_point.cols != 1 || local_point(3, 0) != 1) { throw KerrEngineException("EXCEPTION_KERRMATH_NORMALATSPHEREINVALID_MATRIX_SIZE"); }
 	return local_point - Matrix::point(0.0, 0.0, 0.0);
 }
 
 Matrix KerrMath::localNormalAtPlane(Shape* sphere, const Matrix& world_point)
 {
+	if (DEBUG) { cout << "entered KerrMath::localNormalAtPlane" << endl; }
 	return Matrix::vector(0.0, 1.0, 0.0);
 }
 
 
 Color KerrMath::shadeHit(const World& world, const Computations& comps)
 {
+	if (DEBUG) { cout << "entered KerrMath::shadeHit" << endl; }
 	return KerrMath::lighting(comps.obj->material, world.light, comps.over_point, comps.eyev, comps.normalv, KerrMath::isShadowed(world, comps.over_point));
 }
 
 Color KerrMath::colorAt(const World& world, const Ray& ray)
 {
+	if (DEBUG)
+	{
+		cout << "entered KerrMath::colorAt" << endl;
+		cout << "world.shapes[0].type = " << world.shapes[0]->type << endl;
+		cout << "world.shapes[0].transform = " << endl << world.shapes[0]->transform << endl;
+	}
 	std::vector<Intersection> xs = KerrMath::intersectWorld(world, ray);
+	if (DEBUG) { cout << "KerrMath::colorAt xs.size() = " << xs.size(); }
 	if (xs.size() == 0) { return Color(0.0, 0.0, 0.0); }
 	Intersection i = Intersection::hit(xs);
-	if (i.t < 0.0) { return Color(0.0, 0.0, 0.0); }
+	if (DEBUG) { cout << "KerrMath::colorAt i.t = " << i.t; }
+	if (i.t <= 0.0) { return Color(0.0, 0.0, 0.0); }
 	Computations comps = KerrMath::prepareComputations(i, ray);
 	return KerrMath::shadeHit(world, comps);
 }
 
 bool KerrMath::isShadowed(const World& world, const Matrix& point)
 {
+	if (DEBUG) { cout << "entered KerrMath::isShadowed" << endl; }
 	Matrix v = world.light.position - point;
 	double distance = Matrix::magnitude(v);
 	Matrix direction = Matrix::normalize(v);

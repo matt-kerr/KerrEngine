@@ -41,6 +41,12 @@ Ray Camera::rayForPixel(const Camera& camera, const double& px, const double& py
 
 Canvas Camera::render(const Camera& camera, const World& world)
 {
+	if (DEBUG)
+	{
+		cout << "entered Camera::render" << endl;
+		cout << "world.shapes[0].type = " << world.shapes[0]->type << endl;
+		cout << "world.shapes[0].transform = " << world.shapes[0]->transform << endl;
+	}
 	Canvas image(camera.hsize, camera.vsize);
 	Ray ray;
 	Color color;

@@ -2,10 +2,7 @@
 
 #include "Sphere.h"
 
-Sphere::Sphere() : Shape()
-{
-	this->type = "SPHERE";
-}
+Sphere::Sphere() { this->type = "SPHERE"; }
 
 Sphere::~Sphere() { }
 
@@ -36,5 +33,4 @@ Sphere& Sphere::operator=(Sphere&& orig)
 bool Sphere::operator==(const Sphere& rhs)
 {
 	return Shape::operator==(rhs);
-	//return this->transform == rhs.transform && this->material == rhs.material;
 }

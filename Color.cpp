@@ -1,7 +1,6 @@
 // Matthew Kerr
 
 #include "Color.h"
-using namespace std;
 
 istream& operator>>(istream& in, Color& c)
 {
@@ -38,7 +37,7 @@ Color::Color(const Color& orig)
 }
 
 // move constructor
-Color::Color(Color&& orig) noexcept
+Color::Color(Color&& orig)
 {
 	this->r = orig.r;
 	this->g = orig.g;
@@ -70,26 +69,20 @@ bool Color::operator==(const Color& rhs)
 
 Color Color::operator+(const Color& c2) const
 {
-	return Color::create((this->r + c2.r), (this->g + c2.g), (this->b + c2.b));
+	return Color((this->r + c2.r), (this->g + c2.g), (this->b + c2.b));
 }
 
 Color Color::operator-(const Color& c2) const
 {
-	return Color::create((this->r - c2.r), (this->g - c2.g), (this->b - c2.b));
+	return Color((this->r - c2.r), (this->g - c2.g), (this->b - c2.b));
 }
 
 Color Color::operator*(const Color& c2) const
 {
-	return Color::create((this->r * c2.r), (this->g * c2.g), (this->b * c2.b));
+	return Color((this->r * c2.r), (this->g * c2.g), (this->b * c2.b));
 }
 
 Color Color::operator*(const double& scalar) const
 {
-	return Color::create((this->r * scalar), (this->g * scalar), (this->b * scalar));
-}
-
-Color Color::create(const double& red, const double& green, const double& blue)
-{
-	Color result(red, green, blue);
-	return result;
+	return Color((this->r * scalar), (this->g * scalar), (this->b * scalar));
 }

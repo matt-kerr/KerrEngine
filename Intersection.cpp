@@ -2,15 +2,15 @@
 
 #include "Intersection.h"
 
-
 Intersection::Intersection()
 {
 	this->t = -999.0;
+	this->obj = nullptr;
 }
 
 Intersection::~Intersection() { }
 
-Intersection::Intersection(double t, Sphere obj)
+Intersection::Intersection(double t, Shape* obj)
 {
 	this->t = t;
 	this->obj = obj;
@@ -66,5 +66,5 @@ Intersection Intersection::hit(std::vector<Intersection> xs)
 		}
 	}
 	// no hit
-	return Intersection(-999.0, Sphere());
+	return Intersection(0.0, nullptr);
 }

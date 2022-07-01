@@ -1,7 +1,6 @@
 // Matthew Kerr
 
 #include "Canvas.h"
-using namespace std;
 
 Canvas::Canvas(const int& width, const int& height)
 {

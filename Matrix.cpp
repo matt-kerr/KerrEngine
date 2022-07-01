@@ -210,7 +210,7 @@ Matrix Matrix::operator+(const Matrix& rhs) const
 Matrix Matrix::operator-(const Matrix& rhs) const
 {
 	if (this->type == "VECTOR" && rhs.type == "POINT") { throw KerrEngineException("EXCEPTION_CANNOT_SUBTRACT_POINT_FROM_VECTOR"); }
-	if ((this->rows != rhs.rows) || (this->cols !=rhs.cols)) { throw KerrEngineException("EXCEPTION_MATRIX_ADDITION_NOT_SAME_SIZES"); }
+	if ((this->rows != rhs.rows) || (this->cols != rhs.cols)) { throw KerrEngineException("EXCEPTION_MATRIX_ADDITION_NOT_SAME_SIZES"); }
 	Matrix ret(this->rows, this->cols);
 	ret.data = new double[ret.rows * ret.cols];
 	for (int i = 0; i < this->rows; i++)
@@ -464,7 +464,7 @@ Matrix Matrix::cross(const Matrix& lhs, const Matrix& rhs)
 	// Check that both are vectors
 	if (lhs.type != "VECTOR" || rhs.type != "VECTOR") { throw KerrEngineException("EXCEPTION_DOT_PRODUCT_NOT_VECTORS"); }
 	return Matrix::vector(
-		  (lhs(1, 0) * rhs(2, 0)) - (lhs(2, 0) * rhs(1, 0))
+		(lhs(1, 0) * rhs(2, 0)) - (lhs(2, 0) * rhs(1, 0))
 		, (lhs(2, 0) * rhs(0, 0)) - (lhs(0, 0) * rhs(2, 0))
 		, (lhs(0, 0) * rhs(1, 0)) - (lhs(1, 0) * rhs(0, 0)));
 }

@@ -3,24 +3,23 @@
 #ifndef INTERSECTION_H
 #define INTERSECTION_H
 
-#include <string>
 #include <iostream>
 #include <cstdarg>
 #include <algorithm>
 #include <vector>
-#include "Intersection.h"
-#include "Sphere.h"
-using namespace std;
 
+#include "Shape.h"
+#include "KerrEngineException.h"
+class Shape;
 class Intersection
 {
 	public:
 		double t;
-		Sphere obj;
+		Shape* obj;
 		
 		Intersection();
 		virtual ~Intersection();
-		Intersection(double t, Sphere obj);
+		Intersection(double t, Shape* obj);
 		bool operator==(const Intersection& rhs); // == operator overload
 		bool operator<(const Intersection& rhs); // < operator overload
 		bool operator>(const Intersection& rhs); // > operator overload

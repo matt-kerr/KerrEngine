@@ -5,8 +5,6 @@
 
 #include "Color.h"
 #include "Matrix.h"
-#include "KerrEngineException.h"
-using namespace std;
 
 class PointLight
 {

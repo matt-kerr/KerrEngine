@@ -8,5 +8,5 @@ KerrEngine::KerrEngine() { }
 
 bool KerrEngine::almost_equal(const double& a, const double& b)
 {
-    return std::abs(a - b) < EPSILON;
+	return std::abs(a - b) < EPSILON;
 }

@@ -146,12 +146,15 @@
     <ClCompile Include="Intersection.cpp" />
     <ClCompile Include="KerrEngine.cpp" />
     <ClCompile Include="KerrEngineException.cpp" />
+    <ClCompile Include="KerrMath.cpp" />
     <ClCompile Include="KerrTester.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Matrix.cpp" />
+    <ClCompile Include="Plane.cpp" />
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="Computations.cpp" />
     <ClCompile Include="Ray.cpp" />
+    <ClCompile Include="Shape.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
@@ -162,12 +165,15 @@
     <ClInclude Include="Intersection.h" />
     <ClInclude Include="KerrEngine.h" />
     <ClInclude Include="KerrEngineException.h" />
+    <ClInclude Include="KerrMath.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Matrix.h" />
+    <ClInclude Include="Plane.h" />
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="Computations.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Shape.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>
@@ -178,6 +184,7 @@
     <Image Include="images\spheres_scene.png" />
     <Image Include="images\spheres_shadow_bug.png" />
     <Image Include="images\spheres_shadow_bug_small.png" />
+    <Image Include="images\spheres_shadow_fixed.png" />
     <Image Include="images\spheres_shadow_red.png" />
     <Image Include="images\sphere_with_lighting.png" />
   </ItemGroup>

@@ -57,6 +57,15 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Shape.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Plane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="KerrMath.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KerrEngine.h">
@@ -101,6 +110,15 @@
     <ClInclude Include="Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Shape.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Plane.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="KerrMath.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="KerrEngine.rc">
@@ -121,6 +139,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="images\spheres_shadow_red.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="images\spheres_shadow_fixed.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

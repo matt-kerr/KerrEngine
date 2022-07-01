@@ -4,7 +4,7 @@
 
 Material::Material()
 {
-	this->color = Color::create(1.0, 1.0, 1.0);
+	this->color = Color(1.0, 1.0, 1.0);
 	this->ambient = 0.1;
 	this->diffuse = 0.9;
 	this->specular = 0.9;
@@ -75,38 +75,4 @@ bool Material::operator==(const Material& rhs)
 		&&	(this->diffuse == rhs.diffuse)
 		&&	(this->specular == rhs.specular)
 		&&	(this->shininess == rhs.shininess));
-}
-
-Color Material::lighting(const Material& material, const PointLight& light, const Matrix& point, const Matrix& eyev, const Matrix& normalv, const bool& in_shadow)
-{
-	Color black(0.0, 0.0, 0.0);
-	Color effective_color = material.color * light.intensity;
-	Matrix lightv = Matrix::normalize(light.position - point);
-	Color cont_ambient = effective_color * material.ambient;
-	if (in_shadow) { return cont_ambient; }
-	Color cont_diffuse;
-	Color cont_specular;
-	double light_dot_normal = Matrix::dot(lightv, normalv);
-	double reflect_dot_eye, factor;
-	if (light_dot_normal < 0.0)
-	{
-		cont_diffuse = black;
-		cont_specular = black;
-	}
-	else
-	{
-		cont_diffuse = effective_color * material.diffuse * light_dot_normal;
-		Matrix reflectv = Matrix::reflect(-lightv, normalv);
-		reflect_dot_eye = Matrix::dot(reflectv, eyev);
-		if (reflect_dot_eye <= 0.0)
-		{
-			cont_specular = black;
-		}
-		else
-		{
-			factor = pow(reflect_dot_eye, material.shininess);
-			cont_specular = light.intensity * material.specular * factor;
-		}
-	}
-	return cont_ambient + cont_diffuse + cont_specular;
 }

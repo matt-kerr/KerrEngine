@@ -3,14 +3,14 @@
 #ifndef KERRENGINEEXCEPTION_H
 #define KERRENGINEEXCEPTION_H
 
-#include <fstream>
+#include <iostream>
 #include <string>
 using namespace std;
 
 class KerrEngineException
 {
 public:
-	KerrEngineException(string code);
+	KerrEngineException(std::string code);
 	virtual ~KerrEngineException();
 };
 

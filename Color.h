@@ -4,6 +4,7 @@
 #define COLOR_H
 
 #include <iostream>
+#include <string>
 #include "KerrEngine.h"
 #include "KerrEngineException.h"
 using namespace std;
@@ -23,7 +24,7 @@ class Color
 		Color(const double& r, const double& g, const double& b);
 		virtual ~Color();
 		Color(const Color& orig); // copy constructor
-		Color(Color&& orig) noexcept; // move constructor
+		Color(Color&& orig); // move constructor
 
 		// operator overloads
 		Color& operator=(const Color& c2); // = operator overload
@@ -33,7 +34,6 @@ class Color
 		Color operator-(const Color& c2) const;
 		Color operator*(const Color& c2) const;
 		Color operator*(const double& scalar) const;
-		static Color create(const double& red, const double& green, const double& blue);
 };
 
 #endif

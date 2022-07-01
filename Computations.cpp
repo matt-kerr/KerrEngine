@@ -6,7 +6,7 @@ Computations::Computations() { throw KerrEngineException("Default constructor fo
 
 Computations::~Computations() { }
 
-Computations::Computations(double t, Sphere obj, Matrix point, Matrix over_point, Matrix eyev, Matrix normalv, bool inside)
+Computations::Computations(double t, Shape* obj, Matrix point, Matrix over_point, Matrix eyev, Matrix normalv, bool inside)
 {
 	this->t = t;
 	this->obj = obj;
@@ -60,26 +60,4 @@ Computations& Computations::operator=(Computations&& orig)
 	this->normalv = orig.normalv;
 	this->over_point = orig.over_point;
 	return *this;
-}
-
-Computations Computations::prepareComputations(Intersection intersection, Ray ray)
-{
-	
-	double t = intersection.t;
-	Sphere obj = intersection.obj;
-	Matrix point = Ray::position(ray, t);
-	Matrix eyev = -ray.direction;
-	Matrix normalv = Sphere::normalAt(obj, point);
-	bool inside = false;
-	if (Matrix::dot(normalv, eyev) < 0.0)
-	{
-		inside = true;
-		normalv = -normalv;
-	}
-	else
-	{
-		inside = false;
-	}
-	Matrix over_point = point + normalv * EPSILON;
-	return Computations(t, obj, point, over_point, eyev, normalv, inside);
 }

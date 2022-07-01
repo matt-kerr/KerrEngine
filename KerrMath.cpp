@@ -109,8 +109,9 @@ std::vector<Intersection> KerrMath::localIntersectSphere(Shape* shape, const Ray
 std::vector<Intersection> KerrMath::localIntersectPlane(Shape* shape, const Ray& ray)
 {
 	std::vector<Intersection> ret;
-	if (ray.direction(1, 0) < EPSILON) { return ret; }
-	double t = -ray.origin(1, 0) / ray.direction(1, 0);
+	Ray ray2 = KerrMath::transform(ray, Matrix::inverse(shape->transform));
+	if (ray2.direction(1, 0) < EPSILON) { return ret; }
+	double t = -ray2.origin(1, 0) / ray2.direction(1, 0);
 	ret.push_back(Intersection(t, shape));
 	return ret;
 }

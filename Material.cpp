@@ -4,7 +4,6 @@
 
 Material::Material()
 {
-	this->color = Color(1.0, 1.0, 1.0);
 	this->ambient = 0.1;
 	this->diffuse = 0.9;
 	this->specular = 0.9;
@@ -13,9 +12,10 @@ Material::Material()
 
 Material::~Material() { }
 
-Material::Material(Color color, const double& ambient, const double& diffuse, const double& specular, const double& shininess)
+Material::Material(Color color, Pattern pattern, const double& ambient, const double& diffuse, const double& specular, const double& shininess)
 {
 	this->color = color;
+	this->pattern = pattern;
 	this->ambient = ambient;
 	this->diffuse = diffuse;
 	this->specular = specular;
@@ -26,6 +26,7 @@ Material::Material(Color color, const double& ambient, const double& diffuse, co
 Material::Material(Material& orig)
 {
 	this->color = orig.color;
+	this->pattern = orig.pattern;
 	this->ambient = orig.ambient;
 	this->diffuse = orig.diffuse;
 	this->specular = orig.specular;
@@ -36,6 +37,7 @@ Material::Material(Material& orig)
 Material::Material(Material&& orig) noexcept
 {
 	this->color = orig.color;
+	this->pattern = orig.pattern;
 	this->ambient = orig.ambient;
 	this->diffuse = orig.diffuse;
 	this->specular = orig.specular;
@@ -46,6 +48,7 @@ Material::Material(Material&& orig) noexcept
 Material& Material::operator=(const Material& rhs)
 {
 	this->color = rhs.color;
+	this->pattern = rhs.pattern;
 	this->ambient = rhs.ambient;
 	this->diffuse = rhs.diffuse;
 	this->specular = rhs.specular;
@@ -59,6 +62,7 @@ Material& Material::operator=(Material&& orig)
 	if (this != &orig)
 	{
 		this->color = orig.color;
+		this->pattern = orig.pattern;
 		this->ambient = orig.ambient;
 		this->diffuse = orig.diffuse;
 		this->specular = orig.specular;
@@ -71,6 +75,7 @@ Material& Material::operator=(Material&& orig)
 bool Material::operator==(const Material& rhs)
 {
 	return ((this->color == rhs.color)
+		&&  (this->pattern == rhs.pattern)
 		&&  (this->ambient == rhs.ambient)
 		&&	(this->diffuse == rhs.diffuse)
 		&&	(this->specular == rhs.specular)

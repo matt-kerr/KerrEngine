@@ -25,11 +25,14 @@ Computations KerrMath::prepareComputations(Intersection intersection, Ray ray)
 	return Computations(intersection.t, intersection.obj, point, over_point, eyev, normalv, inside);
 }
 
-Color KerrMath::lighting(const Material& material, const PointLight& light, const Matrix& point, const Matrix& eyev, const Matrix& normalv, const bool& in_shadow)
+Color KerrMath::lighting(const Material& material, Shape* object, const PointLight& light, const Matrix& point, const Matrix& eyev, const Matrix& normalv, const bool& in_shadow)
 {
 	if (DEBUG) { cout << "entered KerrMath::lighting" << endl; }
+	Color color;
+	if (material.pattern.type != "none") { color = KerrMath::patternAtShape(material.pattern, object, point); }
+	else { color = material.color; }
 	Color black(0.0, 0.0, 0.0);
-	Color effective_color = material.color * light.intensity;
+	Color effective_color = color * light.intensity;
 	Matrix lightv = Matrix::normalize(light.position - point);
 	Color cont_ambient = effective_color * material.ambient;
 	if (in_shadow) { return cont_ambient; }
@@ -165,7 +168,7 @@ Matrix KerrMath::localNormalAtSphere(Shape* shape, const Matrix& local_point)
 	return local_point - Matrix::point(0.0, 0.0, 0.0);
 }
 
-Matrix KerrMath::localNormalAtPlane(Shape* sphere, const Matrix& world_point)
+Matrix KerrMath::localNormalAtPlane(Shape* shape, const Matrix& world_point)
 {
 	if (DEBUG) { cout << "entered KerrMath::localNormalAtPlane" << endl; }
 	return Matrix::vector(0.0, 1.0, 0.0);
@@ -175,7 +178,21 @@ Matrix KerrMath::localNormalAtPlane(Shape* sphere, const Matrix& world_point)
 Color KerrMath::shadeHit(const World& world, const Computations& comps)
 {
 	if (DEBUG) { cout << "entered KerrMath::shadeHit" << endl; }
-	return KerrMath::lighting(comps.obj->material, world.light, comps.over_point, comps.eyev, comps.normalv, KerrMath::isShadowed(world, comps.over_point));
+	return KerrMath::lighting(comps.obj->material, comps.obj, world.light, comps.over_point, comps.eyev, comps.normalv, KerrMath::isShadowed(world, comps.over_point));
+}
+
+bool KerrMath::isShadowed(const World& world, const Matrix& point)
+{
+	if (DEBUG) { cout << "entered KerrMath::isShadowed" << endl; }
+	Matrix v = world.light.position - point;
+	double distance = Matrix::magnitude(v);
+	Matrix direction = Matrix::normalize(v);
+	Ray r(point, direction);
+	std::vector<Intersection> xs = KerrMath::intersectWorld(world, r);
+	Intersection h = Intersection::hit(xs);
+	if (h.t == -999.0) { return false; }
+	if (h.t > 0.0 && h.t < distance) { return true; }
+	return false;
 }
 
 Color KerrMath::colorAt(const World& world, const Ray& ray)
@@ -196,17 +213,19 @@ Color KerrMath::colorAt(const World& world, const Ray& ray)
 	return KerrMath::shadeHit(world, comps);
 }
 
-bool KerrMath::isShadowed(const World& world, const Matrix& point)
+Color KerrMath::patternAt(const Pattern& pattern, const Matrix& point)
 {
-	if (DEBUG) { cout << "entered KerrMath::isShadowed" << endl; }
-	Matrix v = world.light.position - point;
-	double distance = Matrix::magnitude(v);
-	Matrix direction = Matrix::normalize(v);
-	Ray r(point, direction);
-	std::vector<Intersection> xs = KerrMath::intersectWorld(world, r);
-	Intersection h = Intersection::hit(xs);
-	if (h.t == -999.0) { return false; }
-	if (h.t > 0.0 && h.t < distance) { return true; }
-	return false;
+	if (pattern.type == "stripe") { return ((int)std::floor(point(0, 0)) % 2 == 0) ? pattern.a : pattern.b; }
+	else if (pattern.type == "test") { return Color(point(0, 0), point(1, 0), point(2, 0)); }
+	else if (pattern.type == "ring") { return ((int)std::floor(std::sqrt(std::pow(point(0, 0), 2.0) + std::pow(point(2, 0), 2.0))) % 2 == 0) ? pattern.a : pattern.b; }
+	else if (pattern.type == "gradient") { return pattern.a + (pattern.b - pattern.a) * (point(0, 0) - std::floor(point(0, 0))); }
+	else if (pattern.type == "checkers") { return ((int)(std::abs(point(0, 0)) + std::abs(point(1, 0)) + std::abs(point(2, 0))) % 2 == 0) ? pattern.a : pattern.b; }
+	throw KerrEngineException("EXCEPTION_PATTERN_STRIPEAT_UNSUPPORTED_PATTERN_TYPE");
 }
 
+Color KerrMath::patternAtShape(const Pattern& pattern, Shape* object, const Matrix& world_point)
+{
+	Matrix object_point = Matrix::inverse(object->transform) * world_point;
+	Matrix pattern_point = Matrix::inverse(pattern.transform) * object_point;
+	return KerrMath::patternAt(pattern, pattern_point);
+}

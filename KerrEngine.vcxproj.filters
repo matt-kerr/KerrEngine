@@ -66,6 +66,9 @@
     <ClCompile Include="KerrMath.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Pattern.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KerrEngine.h">
@@ -119,6 +122,9 @@
     <ClInclude Include="KerrMath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Pattern.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="KerrEngine.rc">
@@ -129,19 +135,10 @@
     <Image Include="images\sphere_with_lighting.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="images\spheres_scene.png">
+    <Image Include="images\plane_simple.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="images\spheres_shadow_bug.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="images\spheres_shadow_bug_small.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="images\spheres_shadow_red.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="images\spheres_shadow_fixed.png">
+    <Image Include="images\patterns.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

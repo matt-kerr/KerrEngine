@@ -4,8 +4,6 @@
 #define SPHERE_H
 
 #include "Shape.h"
-#include "Intersection.h"
-#include "Ray.h"
 
 class Sphere : public Shape
 {

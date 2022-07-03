@@ -4,8 +4,9 @@
 #define WORLD_H
 
 #include <vector>
+#include "Color.h"
 #include "PointLight.h"
-#include "Sphere.h"
+#include "Shape.h"
 
 class World
 {

@@ -22,6 +22,7 @@ class Color
 		// constructors
 		Color();
 		Color(const double& r, const double& g, const double& b);
+		Color(std::string name);
 		virtual ~Color();
 		Color(const Color& orig); // copy constructor
 		Color(Color&& orig); // move constructor

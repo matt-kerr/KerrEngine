@@ -26,6 +26,13 @@ Color::Color(const double& r, const double& g, const double& b)
 	this->b = b;
 }
 
+Color::Color(std::string name)
+{
+	if (name == "white") { this->r = 1.0; this->b = 1.0; this->g = 1.0; }
+	else if (name == "black") { this->r = 0.0; this->b = 0.0; this->g = 0.0; }
+	else { throw KerrEngineException("EXCEPTION_COLOR_UNSUPPORTED_STRING_NAME"); }
+}
+
 Color::~Color() {}
 
 // copy constructor

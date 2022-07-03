@@ -10,7 +10,7 @@
 
 #include "Shape.h"
 #include "KerrEngineException.h"
-class Shape;
+
 class Intersection
 {
 	public:

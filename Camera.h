@@ -8,6 +8,7 @@
 #include "Canvas.h"
 #include "World.h"
 #include "KerrMath.h"
+#include "KerrEngineException.h"
 
 class Camera
 {

@@ -150,6 +150,7 @@
     <ClCompile Include="KerrTester.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Matrix.cpp" />
+    <ClCompile Include="Pattern.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="Computations.cpp" />
@@ -168,6 +169,7 @@
     <ClInclude Include="KerrMath.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Matrix.h" />
+    <ClInclude Include="Pattern.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="Computations.h" />
@@ -181,11 +183,8 @@
     <ResourceCompile Include="KerrEngine.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="images\spheres_scene.png" />
-    <Image Include="images\spheres_shadow_bug.png" />
-    <Image Include="images\spheres_shadow_bug_small.png" />
-    <Image Include="images\spheres_shadow_fixed.png" />
-    <Image Include="images\spheres_shadow_red.png" />
+    <Image Include="images\patterns.png" />
+    <Image Include="images\plane_simple.png" />
     <Image Include="images\sphere_with_lighting.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

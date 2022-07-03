@@ -52,7 +52,7 @@ Canvas Camera::render(const Camera& camera, const World& world)
 	Color color;
 	for (int y = 0; y < (camera.vsize - 1); y++)
 	{
-		cout << "row " << (y + 1) << "/" << camera.vsize << endl;
+		cout << y + 1 << "/" << camera.vsize << endl;
 		for (int x = 0; x < (camera.hsize - 1); x++)
 		{
 			ray = Camera::rayForPixel(camera, x, y);

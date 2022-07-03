@@ -31,7 +31,7 @@ int main()
 	Plane* wall = new Plane();
 	wall->transform = Matrix::translation(0.0, 0.0, 5.0) * Matrix::rotationX(std::numbers::pi / 2);
 	wall->material.specular = 0.0;
-	wall->material.pattern = Pattern(Color(0.215, 0.305, 0.451), Color(0.082, 0.133, 0.219), "checkers", Matrix::scaling(0.25, 0.25, 0.25));
+	wall->material.pattern = Pattern(Color(0.215, 0.305, 0.451), Color(0.082, 0.133, 0.219), "checkers", Matrix::scaling(0.25, 0.25, 0.25) * Matrix::translation(0.5, 0.0, 0.0));
 
 	Sphere* left = new Sphere();
 	left->transform = Matrix::translation(-1.5, 0.33, -0.75) * Matrix::scaling(0.33, 0.33, 0.33);

@@ -183,7 +183,7 @@
     <ResourceCompile Include="KerrEngine.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="images\patterns.png" />
+    <Image Include="images\patterns_scene.png" />
     <Image Include="images\plane_simple.png" />
     <Image Include="images\sphere_with_lighting.png" />
   </ItemGroup>

@@ -138,7 +138,7 @@
     <Image Include="images\plane_simple.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="images\patterns.png">
+    <Image Include="images\patterns_scene.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

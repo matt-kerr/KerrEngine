@@ -219,7 +219,7 @@ Color KerrMath::patternAt(const Pattern& pattern, const Matrix& point)
 	else if (pattern.type == "test") { return Color(point(0, 0), point(1, 0), point(2, 0)); }
 	else if (pattern.type == "ring") { return ((int)std::floor(std::sqrt(std::pow(point(0, 0), 2.0) + std::pow(point(2, 0), 2.0))) % 2 == 0) ? pattern.a : pattern.b; }
 	else if (pattern.type == "gradient") { return pattern.a + (pattern.b - pattern.a) * (point(0, 0) - std::floor(point(0, 0))); }
-	else if (pattern.type == "checkers") { return ((int)(std::abs(point(0, 0)) + std::abs(point(1, 0)) + std::abs(point(2, 0))) % 2 == 0) ? pattern.a : pattern.b; }
+	else if (pattern.type == "checkers") { return ((int)(std::floor(point(0, 0)) + std::floor(point(1, 0)) + std::floor(point(2, 0))) % 2 == 0) ? pattern.a : pattern.b; }
 	throw KerrEngineException("EXCEPTION_PATTERN_STRIPEAT_UNSUPPORTED_PATTERN_TYPE");
 }
 

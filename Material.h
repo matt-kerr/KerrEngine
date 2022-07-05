@@ -11,12 +11,20 @@ class Material
 	public:
 		Color color;
 		Pattern pattern;
-		double ambient, diffuse, specular, shininess;
+		double ambient;
+		double diffuse;
+		double specular;
+		double shininess;
+		double reflective;
+		double transparency;
+		double refractive_index;
 
 		// constructors
 		Material();
 		virtual ~Material();
-		Material(Color color, Pattern pattern, const double& ambient, const double& diffuse, const double& specular, const double& shininess);
+		Material(Color color, Pattern pattern, const double& ambient
+				, const double& diffuse, const double& specular, const double& shininess
+				, const double& reflective, const double& transparency, const double& refractive_index);
 
 		Material(Material& orig); // copy constructor
 		Material(Material&& orig) noexcept; // move constructor

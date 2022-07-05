@@ -7,6 +7,8 @@
 #include "Color.h"
 #include "PointLight.h"
 #include "Shape.h"
+#include "Sphere.h"
+#include "Plane.h"
 
 class World
 {

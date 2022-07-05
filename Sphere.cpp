@@ -34,3 +34,11 @@ bool Sphere::operator==(const Sphere& rhs)
 {
 	return Shape::operator==(rhs);
 }
+
+Sphere* Sphere::glassSphere()
+{
+	Sphere* s_ptr = new Sphere();
+	s_ptr->material.transparency = 1.0;
+	s_ptr->material.refractive_index = 1.5;
+	return s_ptr;
+}

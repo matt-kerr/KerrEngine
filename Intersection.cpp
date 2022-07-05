@@ -2,6 +2,12 @@
 
 #include "Intersection.h"
 
+std::ostream& operator<<(std::ostream& out, const Intersection& i)
+{
+	cout << "t = " << i.t << " obj = " << i.obj << endl;
+	return out;
+}
+
 Intersection::Intersection()
 {
 	this->t = -999.0;
@@ -16,7 +22,10 @@ Intersection::Intersection(double t, Shape* obj)
 	this->obj = obj;
 }
 // == operator overload
-bool Intersection::operator==(const Intersection& rhs) { return KerrEngine::almost_equal(this->t, rhs.t); }
+bool Intersection::operator==(const Intersection& rhs)
+{
+	return (this->obj == rhs.obj) && KerrEngine::almost_equal(this->t, rhs.t);
+}
 
 // < operator overload
 bool Intersection::operator<(const Intersection& rhs) { return this->t < rhs.t; }

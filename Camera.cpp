@@ -41,12 +41,6 @@ Ray Camera::rayForPixel(const Camera& camera, const double& px, const double& py
 
 Canvas Camera::render(const Camera& camera, const World& world)
 {
-	if (DEBUG)
-	{
-		cout << "entered Camera::render" << endl;
-		cout << "world.shapes[0].type = " << world.shapes[0]->type << endl;
-		cout << "world.shapes[0].transform = " << world.shapes[0]->transform << endl;
-	}
 	Canvas image(camera.hsize, camera.vsize);
 	Ray ray;
 	Color color;
@@ -56,7 +50,7 @@ Canvas Camera::render(const Camera& camera, const World& world)
 		for (int x = 0; x < (camera.hsize - 1); x++)
 		{
 			ray = Camera::rayForPixel(camera, x, y);
-			color = KerrMath::colorAt(world, ray);
+			color = KerrMath::colorAt(world, ray, REFLECTION_DEPTH);
 			image.writePixel(x, y, color);
 		}
 	}

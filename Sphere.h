@@ -19,6 +19,9 @@ class Sphere : public Shape
 		Sphere& operator=(const Sphere& rhs); // = operator overload
 		Sphere& operator=(Sphere&& orig); // move = operator overload (move assignment overload)
 		bool operator==(const Sphere& rhs); // == operator overload
+
+		// sphere functions
+		static Sphere* glassSphere();
 };
 
 #endif

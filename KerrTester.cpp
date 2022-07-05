@@ -17,7 +17,7 @@
 using namespace std;
 
 int main()
-{	
+{
 	// Putting it together
 	string images_path = "C:\\KerrEngine_images\\";
 	ofstream fout(images_path + "image.ppm");
@@ -45,6 +45,7 @@ int main()
 	middle->material.color = Color(0.1, 0.5, 1.0);
 	middle->material.diffuse = 0.7;
 	middle->material.specular = 0.3;
+	middle->material.reflective = 0.5;
 	middle->material.pattern = Pattern(Color(0.1, 0.4, 0.9), Color(0.3, 0.2, 0.9), "stripe", Matrix::scaling(0.1, 0.1, 0.1) * Matrix::rotationZ(std::numbers::pi / 2));
 
 	Sphere* right = new Sphere();
@@ -60,20 +61,12 @@ int main()
 	world.shapes.push_back(middle);
 	world.shapes.push_back(right);
 
-	Camera camera(800, 600, (std::numbers::pi / 3));
+	Camera camera(800, 600, PI_OVER_3);
 	camera.transform = Matrix::viewTransform(Matrix::point(0.0, 1.5, -5.0), Matrix::point(0.0, 1.0, 0.0), Matrix::vector(0.0, 1.0, 0.0));
 
 	Canvas c = Camera::render(camera, world);
 	c.saveImage(fout, 255);
 	fout.close();
-
-	world.shapes.clear();
-	delete floor;
-	delete wall;
-	delete left;
-	delete middle;
-	delete right;
-
-
+	
 	return 0;
 }

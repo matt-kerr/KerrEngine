@@ -35,7 +35,7 @@ Matrix::Matrix()
 	this->rows = 0;
 	this->cols = 0;
 	this->type = "MATRIX";
-	this->data = new double[0];
+	this->data = nullptr;
 }
 
 Matrix::Matrix(int rows, int cols)

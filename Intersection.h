@@ -9,10 +9,13 @@
 #include <vector>
 
 #include "Shape.h"
+#include "KerrEngine.h"
 #include "KerrEngineException.h"
 
 class Intersection
 {
+	friend std::ostream& operator<<(std::ostream& out, const Intersection& i);
+
 	public:
 		double t;
 		Shape* obj;

@@ -15,12 +15,15 @@ class Computations
 		Matrix over_point;
 		Matrix eyev;
 		Matrix normalv;
+		Matrix reflectv;
 		bool inside;
+		double n1;
+		double n2;
 		
 		// constructors
 		Computations();
 		virtual ~Computations();
-		Computations(double t, Shape* obj, Matrix point, Matrix over_point, Matrix eyev, Matrix normalv, bool inside);
+		Computations(double t, Shape* obj, Matrix point, Matrix over_point, Matrix eyev, Matrix normalv, Matrix reflectv, bool inside, double n1, double n2);
 		Computations(const Computations& orig); // copy constructor
 		Computations(Computations&& orig); // move constructor
 

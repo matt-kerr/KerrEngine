@@ -10,7 +10,7 @@ std::ostream& operator<<(std::ostream& out, const Intersection& i)
 
 Intersection::Intersection()
 {
-	this->t = -999.0;
+	this->t = 0.0;
 	this->obj = nullptr;
 }
 

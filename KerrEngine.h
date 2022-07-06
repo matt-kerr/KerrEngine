@@ -15,8 +15,7 @@
 #define PI std::numbers::pi
 #define THREE_PI_OVER_2 (3.0 * std::numbers::pi) / 2
 #define TWO_PI 2.0 * std::numbers::pi
-#define DEBUG 0
-#define DEBUG2 0
+#define DEBUG 1
 
 using namespace std;
 

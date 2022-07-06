@@ -6,12 +6,13 @@ Computations::Computations() { throw KerrEngineException("Default constructor fo
 
 Computations::~Computations() { }
 
-Computations::Computations(double t, Shape* obj, Matrix point, Matrix over_point, Matrix eyev, Matrix normalv, Matrix reflectv, bool inside, double n1, double n2)
+Computations::Computations(double t, Shape* obj, Matrix point, Matrix over_point, Matrix under_point, Matrix eyev, Matrix normalv, Matrix reflectv, bool inside, double n1, double n2)
 {
 	this->t = t;
 	this->obj = obj;
 	this->point = point;
 	this->over_point = over_point;
+	this->under_point = under_point;
 	this->eyev = eyev;
 	this->normalv = normalv;
 	this->reflectv = reflectv;
@@ -26,6 +27,7 @@ Computations::Computations(const Computations& orig)
 	this->obj = orig.obj;
 	this->point = orig.point;
 	this->over_point = orig.over_point;
+	this->under_point = orig.under_point;
 	this->eyev = orig.eyev;
 	this->normalv = orig.normalv;
 	this->reflectv = orig.reflectv;
@@ -38,6 +40,7 @@ Computations::Computations(Computations&& orig)
 	this->obj = orig.obj;
 	this->point = orig.point;
 	this->over_point = orig.over_point;
+	this->under_point = orig.under_point;
 	this->eyev = orig.eyev;
 	this->normalv = orig.normalv;
 	this->reflectv = orig.reflectv;
@@ -51,6 +54,7 @@ Computations& Computations::operator=(const Computations& rhs)
 	this->obj = rhs.obj;
 	this->point = rhs.point;
 	this->over_point = rhs.over_point;
+	this->under_point = rhs.under_point;
 	this->eyev = rhs.eyev;
 	this->normalv = rhs.normalv;
 	this->reflectv = rhs.reflectv;
@@ -65,6 +69,7 @@ Computations& Computations::operator=(Computations&& orig)
 	this->obj = orig.obj;
 	this->point = orig.point;
 	this->over_point = orig.over_point;
+	this->under_point = orig.under_point;
 	this->eyev = orig.eyev;
 	this->normalv = orig.normalv;
 	this->reflectv = orig.reflectv;

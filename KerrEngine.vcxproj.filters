@@ -132,13 +132,7 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="images\sphere_with_lighting.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="images\plane_simple.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="images\patterns_scene.png">
+    <Image Include="images\scene.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

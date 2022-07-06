@@ -19,6 +19,10 @@ class World
 		// constructors
 		World();
 		virtual ~World();
+
+		// world functions
+		static void clearWorld(World w);
+		static World defaultWorld();
 };
 
 #endif;

@@ -11,6 +11,7 @@ Computations KerrMath::prepareComputations(Intersection intersection, Ray ray, s
 	else { inside = false; }
 	Matrix reflectv = Matrix::reflect(ray.direction, normalv);
 	Matrix over_point = point + normalv * EPSILON;
+	Matrix under_point = point - normalv * EPSILON;
 	std::vector<Shape*> containers;
 	double n1 = -1.0;
 	double n2 = -1.0;
@@ -35,7 +36,7 @@ Computations KerrMath::prepareComputations(Intersection intersection, Ray ray, s
 			break;
 		}
 	}
-	return Computations(intersection.t, intersection.obj, point, over_point, eyev, normalv, reflectv, inside, n1, n2);
+	return Computations(intersection.t, intersection.obj, point, over_point, under_point, eyev, normalv, reflectv, inside, n1, n2);
 }
 
 Color KerrMath::lighting(const Material& material, Shape* object, const PointLight& light, const Matrix& point, const Matrix& eyev, const Matrix& normalv, const bool& in_shadow)
@@ -163,7 +164,8 @@ Color KerrMath::shadeHit(const World& world, const Computations& comps, const in
 {
 	Color surface = KerrMath::lighting(comps.obj->material, comps.obj, world.light, comps.over_point, comps.eyev, comps.normalv, KerrMath::isShadowed(world, comps.over_point));
 	Color reflected = KerrMath::reflectedColor(world, comps, remaining);
-	return surface + reflected;
+	Color refracted = KerrMath::refractedColor(world, comps, remaining);
+	return surface + reflected + refracted;
 }
 
 bool KerrMath::isShadowed(const World& world, const Matrix& point)
@@ -174,8 +176,7 @@ bool KerrMath::isShadowed(const World& world, const Matrix& point)
 	Ray r(point, direction);
 	std::vector<Intersection> xs = KerrMath::intersectWorld(world, r);
 	Intersection h = Intersection::hit(xs);
-	if (h.t == -999.0) { return false; }
-	if (h.t > 0.0 && h.t < distance) { return true; }
+	if (h.obj != nullptr && h.t < distance) { return true; }
 	return false;
 }
 
@@ -195,6 +196,20 @@ Color KerrMath::reflectedColor(const World& world, const Computations& comps, co
 	Ray reflect_ray(comps.over_point, comps.reflectv);
 	Color color = KerrMath::colorAt(world, reflect_ray, remaining - 1);
 	return color * comps.obj->material.reflective;
+}
+
+Color KerrMath::refractedColor(const World& world, const Computations& comps, const int& remaining)
+{
+	if (remaining == 0) { return Color(0.0, 0.0, 0.0); }
+	if (comps.obj->material.transparency == 0.0) { return Color(0.0, 0.0, 0.0); }
+	double n_ratio = comps.n1 / comps.n2;
+	double cos_i = Matrix::dot(comps.eyev, comps.normalv);
+	double sin2_t = std::pow(n_ratio, 2.0) * (1 - std::pow(cos_i, 2.0));
+	if (sin2_t > 1.0) { return Color(0.0, 0.0, 0.0); }
+	double cos_t = std::sqrt(1.0 - sin2_t);
+	Matrix direction = comps.normalv * (n_ratio * cos_i - cos_t) - comps.eyev * n_ratio;
+	Ray refract_ray(comps.under_point, direction);
+	return KerrMath::colorAt(world, refract_ray, remaining - 1) * comps.obj->material.transparency;
 }
 
 Color KerrMath::patternAt(const Pattern& pattern, const Matrix& point)

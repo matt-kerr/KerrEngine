@@ -15,6 +15,7 @@
 #include "Shape.h"
 #include "Sphere.h"
 #include "Pattern.h"
+#include "KerrEngine.h"
 #include "KerrEngineException.h"
 
 class KerrMath
@@ -34,6 +35,7 @@ class KerrMath
         static bool isShadowed(const World& world, const Matrix& point);
         static Color colorAt(const World& world, const Ray& ray, const int& remaining);
         static Color reflectedColor(const World& world, const Computations& comps, const int& remaining);
+        static Color refractedColor(const World& world, const Computations& comps, const int& remaining);
         static Color patternAt(const Pattern& pattern, const Matrix& point);
         static Color patternAtShape(const Pattern& pattern, Shape* object, const Matrix& world_point);
 };      

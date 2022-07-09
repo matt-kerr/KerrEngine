@@ -3,6 +3,8 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
+#include <thread>
+#include <vector>
 #include "Matrix.h"
 #include "Ray.h"
 #include "Canvas.h"
@@ -30,6 +32,9 @@ class Camera
         // camera functions
         static Ray rayForPixel(const Camera& camera, const double& px, const double& py);
         static Canvas render(const Camera& camera, const World& world);
+
+        static Canvas renderMultithreaded(const Camera& camera, const World& world, int num_threads);
+        static void setCanvasColorMultithreaded(const Camera& camera, const World& world, Canvas image, const double& y_from, const double& y_to);
 };
 
 #endif

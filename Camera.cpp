@@ -56,3 +56,41 @@ Canvas Camera::render(const Camera& camera, const World& world)
 	}
 	return image;
 }
+
+Canvas Camera::renderMultithreaded(const Camera& camera, const World& world, int num_threads)
+{
+	std::vector<std::thread> threads;
+	Canvas image(camera.hsize, camera.vsize);
+	Ray ray;
+	Color color;
+	int rows_per_thread = (camera.vsize - 1) / num_threads;
+	for (int i = 0; i < num_threads; i++)
+	{
+		cout << "creating thread " << i << endl;
+
+		threads.push_back(std::thread(setCanvasColorMultithreaded, camera, world, image, (i * rows_per_thread), ((i * rows_per_thread) + rows_per_thread)));
+
+	}
+	for (int i = 0; i < threads.size(); i++)
+	{
+		threads[i].join();
+	}
+	return image;
+}
+
+void Camera::setCanvasColorMultithreaded(const Camera& camera, const World& world, Canvas image, const double& y_from, const double& y_to)
+{
+	Ray ray;
+	Color color;
+	for (int y = y_from; y < y_to; y++)
+	{
+		for (int x = 0; x < (camera.hsize - 1); x++)
+		{
+			ray = Camera::rayForPixel(camera, x, y);
+			color = KerrMath::colorAt(world, ray, REFLECTION_DEPTH);
+			image.writePixel(x, y, color);
+		}
+		cout << "finished row " << y << endl;
+	}
+	cout << "thread finished" << endl;
+}

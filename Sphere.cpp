@@ -2,7 +2,7 @@
 
 #include "Sphere.h"
 
-Sphere::Sphere() { this->type = "SPHERE"; }
+Sphere::Sphere() : Shape() { this->type = "SPHERE"; }
 
 Sphere::~Sphere() { }
 

@@ -2,7 +2,7 @@
 
 #include "Plane.h"
 
-Plane::Plane() { this->type = "PLANE"; }
+Plane::Plane() : Shape() { this->type = "PLANE"; }
 
 Plane::~Plane() { }
 

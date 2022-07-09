@@ -2,10 +2,10 @@
 
 #ifndef KERRENGINE_H
 #define KERRENGINE_H
-#define EPSILON 0.00001
+#define EPSILON 0.001
 #define VECTOR 0
 #define POINT 1
-#define REFLECTION_DEPTH 5
+#define REFLECTION_DEPTH 6
 #define SQRT_2 std::sqrt(2)
 #define SQRT_2_OVER_2 std::sqrt(2) / 2
 #define PI_OVER_6 std::numbers::pi / 6

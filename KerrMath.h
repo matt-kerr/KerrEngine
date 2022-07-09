@@ -14,6 +14,8 @@
 #include "World.h"
 #include "Shape.h"
 #include "Sphere.h"
+#include "Plane.h"
+#include "Cube.h"
 #include "Pattern.h"
 #include "KerrEngine.h"
 #include "KerrEngineException.h"
@@ -28,9 +30,11 @@ class KerrMath
         static std::vector<Intersection> intersectWorld(const World& w, const Ray& r);
         static std::vector<Intersection> localIntersectSphere(Shape* shape, const Ray& ray);
         static std::vector<Intersection> localIntersectPlane(Shape* shape, const Ray& ray);
+        static std::vector<Intersection> localIntersectCube(Shape* shape, const Ray& ray);
         static Matrix normalAt(Shape* shape, const Matrix& point);
-        static Matrix localNormalAtSphere(Shape* shape, const Matrix& world_point);
-        static Matrix localNormalAtPlane(Shape* shape, const Matrix& world_point);
+        static Matrix localNormalAtSphere(Shape* shape, const Matrix& point);
+        static Matrix localNormalAtPlane(Shape* shape, const Matrix& point);
+        static Matrix localNormalAtCube(Shape* shape, const Matrix& point);
         static Color shadeHit(const World& world, const Computations& comps, const int& remaining);
         static bool isShadowed(const World& world, const Matrix& point);
         static Color colorAt(const World& world, const Ray& ray, const int& remaining);
@@ -38,6 +42,8 @@ class KerrMath
         static Color refractedColor(const World& world, const Computations& comps, const int& remaining);
         static Color patternAt(const Pattern& pattern, const Matrix& point);
         static Color patternAtShape(const Pattern& pattern, Shape* object, const Matrix& world_point);
+        static double schlick(const Computations& comps);
+        static std::vector<double> checkAxis(const double& origin, const double& direction);
 };      
 
 #endif

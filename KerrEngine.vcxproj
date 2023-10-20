@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{177311db-5c64-491c-9e1b-7427166ff20a}</ProjectGuid>
+    <RootNamespace>KerrEngine</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="samples\sample_glass_spheres.cpp" />
+    <ClCompile Include="samples\sample_scene.cpp" />
+    <ClCompile Include="samples\sample_teddy.cpp" />
+    <ClCompile Include="shapes\obj_parser.cpp" />
+    <ClCompile Include="shapes\hexagon.cpp" />
+    <ClCompile Include="kerr_math.cpp" />
+    <ClCompile Include="kerr_main.cpp" />
+    <ClCompile Include="lights\light.cpp" />
+    <ClCompile Include="lights\point_light.cpp" />
+    <ClCompile Include="patterns\pattern.cpp" />
+    <ClCompile Include="primitives\color.cpp" />
+    <ClCompile Include="primitives\intersection.cpp" />
+    <ClCompile Include="primitives\intersections.cpp" />
+    <ClCompile Include="primitives\matrix.cpp" />
+    <ClCompile Include="primitives\ray.cpp" />
+    <ClCompile Include="primitives\transformation.cpp" />
+    <ClCompile Include="primitives\tuple.cpp" />
+    <ClCompile Include="scene\camera.cpp" />
+    <ClCompile Include="scene\canvas.cpp" />
+    <ClCompile Include="scene\prepared_computation.cpp" />
+    <ClCompile Include="scene\world.cpp" />
+    <ClCompile Include="shapes\bounding_box.cpp" />
+    <ClCompile Include="shapes\cone.cpp" />
+    <ClCompile Include="shapes\cube.cpp" />
+    <ClCompile Include="shapes\cylinder.cpp" />
+    <ClCompile Include="shapes\glass_sphere.cpp" />
+    <ClCompile Include="shapes\group.cpp" />
+    <ClCompile Include="shapes\material.cpp" />
+    <ClCompile Include="shapes\plane.cpp" />
+    <ClCompile Include="shapes\shape.cpp" />
+    <ClCompile Include="shapes\sphere.cpp" />
+    <ClCompile Include="shapes\triangle.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="samples\sample_glass_spheres.h" />
+    <ClInclude Include="samples\sample_scene.h" />
+    <ClInclude Include="samples\sample_teddy.h" />
+    <ClInclude Include="shapes\obj_parser.h" />
+    <ClInclude Include="shapes\hexagon.h" />
+    <ClInclude Include="kerr_math.h" />
+    <ClInclude Include="kerr_engine.h" />
+    <ClInclude Include="kerr_inline.h" />
+    <ClInclude Include="lights\light.h" />
+    <ClInclude Include="lights\point_light.h" />
+    <ClInclude Include="patterns\checker_pattern.h" />
+    <ClInclude Include="patterns\gradient_pattern.h" />
+    <ClInclude Include="patterns\pattern.h" />
+    <ClInclude Include="patterns\ring_pattern.h" />
+    <ClInclude Include="patterns\stripe_pattern.h" />
+    <ClInclude Include="patterns\test_pattern.h" />
+    <ClInclude Include="primitives\color.h" />
+    <ClInclude Include="primitives\intersection.h" />
+    <ClInclude Include="primitives\intersections.h" />
+    <ClInclude Include="primitives\matrix.h" />
+    <ClInclude Include="primitives\ray.h" />
+    <ClInclude Include="primitives\transformation.h" />
+    <ClInclude Include="primitives\tuple.h" />
+    <ClInclude Include="scene\camera.h" />
+    <ClInclude Include="scene\canvas.h" />
+    <ClInclude Include="scene\prepared_computation.h" />
+    <ClInclude Include="scene\world.h" />
+    <ClInclude Include="shapes\bounding_box.h" />
+    <ClInclude Include="shapes\cone.h" />
+    <ClInclude Include="shapes\cube.h" />
+    <ClInclude Include="shapes\cylinder.h" />
+    <ClInclude Include="shapes\glass_sphere.h" />
+    <ClInclude Include="shapes\group.h" />
+    <ClInclude Include="shapes\material.h" />
+    <ClInclude Include="shapes\plane.h" />
+    <ClInclude Include="shapes\shape.h" />
+    <ClInclude Include="shapes\sphere.h" />
+    <ClInclude Include="shapes\triangle.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\chaos_orb.png" />
+    <None Include="images\glass_reflection.png" />
+    <None Include="images\scene.png" />
+    <None Include="images\teddy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="samples\teddy.obj">
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="samples\chaos_orb_min.obj">
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
